@@ -67,6 +67,7 @@ function createName() {
     "BIRD",
     "BUG",
   ]);
+
   return `${prefix} ${animal}`;
 }
 
@@ -296,7 +297,7 @@ function getRandomSafeSpot() {
   }
 
   firebase.auth().onAuthStateChanged((user) => {
-    console.log(user)
+    // console.log(user)
     if (user) {
       //You're logged in!
       playerId = user.uid;
@@ -331,7 +332,6 @@ function getRandomSafeSpot() {
   firebase.auth().signInAnonymously().catch((error) => {
     var errorCode = error.code;
     var errorMessage = error.message;
-    // ...
     console.log(errorCode, errorMessage);
   });
 
