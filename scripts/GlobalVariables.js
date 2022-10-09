@@ -2,6 +2,8 @@
 const tileSize = 16;
 const height = 208;
 const width = 240;
+const QRCodeHeight = 300;
+const QRCodeWidth = 300;
 
 const mapData = {
   minX: 0,
@@ -27,4 +29,3 @@ const gameContainer = document.querySelector(".game-container");
 const playerNameInput = document.querySelector("#player-name");
 const playerColorButton = document.querySelector("#player-color");
 const testButton = document.querySelector("#player-test");
-const gameContainerComputedStyle = getComputedStyle(gameContainer);

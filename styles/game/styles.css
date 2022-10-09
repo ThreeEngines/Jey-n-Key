@@ -19,7 +19,7 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: linear-gradient(180deg, #64BEFF -50%, #6e96ff 69.71%, #2a65ff 150%);
+  background: var(--background-color);
   font-family: 'Source Sans Pro', sans-serif;
   display: flex;
   align-items: center;

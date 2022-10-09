@@ -61,3 +61,12 @@ function randomIntFromInterval(min, max) {
   // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+
+
+var urlParam = function(name, w){
+  w = w || window;
+  var rx = new RegExp('[\&|\?]'+name+'=([^\&\#]+)'),
+      val = w.location.search.match(rx);
+  return !val ? '':val[1];
+}

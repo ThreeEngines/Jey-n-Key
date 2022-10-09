@@ -22,9 +22,6 @@
 
       //Remove me from Firebase when I diconnect
       playerRef.onDisconnect().remove();
-
-      //Begin the game now that we are signed in
-      game();
     } else {
       //You're logged out.
     }
