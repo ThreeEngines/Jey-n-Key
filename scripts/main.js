@@ -9,8 +9,7 @@
       const name = createName();
       playerNameInput.value = name;
 
-      const {x, y} = getRandomSafeSpot();
-
+      const { x, y } = getRandomSafeSpot();
 
       playerRef.set({
         id: playerId,
@@ -19,8 +18,7 @@
         color: randomFromArray(playerColors),
         x,
         y,
-        coins: 0,
-      })
+      });
 
       //Remove me from Firebase when I diconnect
       playerRef.onDisconnect().remove();
@@ -30,11 +28,14 @@
     } else {
       //You're logged out.
     }
-  })
-
-  firebase.auth().signInAnonymously().catch((error) => {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    console.log(errorCode, errorMessage);
   });
+
+  firebase
+    .auth()
+    .signInAnonymously()
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    });
 })();

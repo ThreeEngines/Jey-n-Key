@@ -1,0 +1,8 @@
+:root {
+    --arrow: url(/images/arrow.png);
+    --character: url(/images/characters_old.png);
+    --map: url(/images/map_old.png);
+    --tileSize: 16px;
+    --width: 240px;
+    --height: 208px;
+}
