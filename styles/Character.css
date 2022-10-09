@@ -1,0 +1,70 @@
+/* Characters */
+.grid-cell {
+    position: absolute;
+    width: var(--tileSize);
+    height: var(--tileSize);
+}
+
+.Character {
+   transition: transform 0.4s;
+}
+.Character.you {
+    z-index: 1;
+}
+.Character.you .Character_you-arrow {
+    display: block;
+}
+.Character_you-arrow {
+    display: none;
+    position: absolute;
+    top:-18px;
+    left: 5px;
+    width: 7px;
+    height: 5px;
+    background: var(--arrow) no-repeat no-repeat;
+}
+.Character_sprite {
+    overflow: hidden;
+    top: -3px;
+    background: var(--character);
+}
+.Character[data-direction="right"] .Character_sprite {
+    background-position-x: var(--tileSize);
+}
+.Character[data-color="red"] .Character_sprite {
+    background-position-y: calc(var(--tileSize) * -1);
+}
+.Character[data-color="orange"] .Character_sprite {
+    background-position-y: calc(var(--tileSize) * -2);
+}
+.Character[data-color="yellow"] .Character_sprite {
+    background-position-y: calc(var(--tileSize) * -3);
+}
+.Character[data-color="green"] .Character_sprite {
+    background-position-y: calc(var(--tileSize) * -4);
+}
+.Character[data-color="purple"] .Character_sprite {
+    background-position-y: calc(var(--tileSize) * -5);
+}
+.Character_shadow {
+    background: url(/images/shadow.png) no-repeat no-repeat;
+}
+
+.Character_name-container {
+    position: absolute;
+    top: -12px;
+    left: -5px;
+    font-size: 5px;
+    padding: 1px 2px 1px;
+    border-radius: 3px;
+    background: #333;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transform: scale(2);
+}
+.Character_coins {
+    margin-left: 1px;
+    color: gold;
+}
