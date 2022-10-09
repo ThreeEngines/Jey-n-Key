@@ -1,0 +1,38 @@
+<html>
+  <head>    
+    <title>Jey n' Key - Lobby</title>
+    <link rel="stylesheet" href="../styles/Root.css" type="text/css">
+    <link rel="stylesheet" href="../styles/lobby/styles.css" type="text/css">
+    <link rel="stylesheet" href="../styles/lobby/letters.css" type="text/css">
+    <link rel="stylesheet" href="../styles/GlobalVariables.css" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  
+    <script src="../scripts/utils.js"></script>
+  </head>
+
+  <body onload="generate()">
+    <div class="qrcode-wrapper">
+      <a class="arcade-text">Join  the game!</a>
+      
+      <div class="qr-code-container">
+        <div class="qr-code"></div>
+      </div>
+
+      <button class="button start-game" type="submit">GAME START!<i class="fa-solid fa-rotate"></i></button>
+      <!-- TODO -->
+      <!--
+        Chamar a função game() ==> /scripts/game/game.js
+      //Begin the game now that we are signed in
+      // game();
+        Atualizar o Firebase para redirecionar todo mundo para a pagina 'gameplay'
+    -->
+
+    </div>
+    <script src="../scripts/GlobalVariables.js"></script>
+    <script src="../scripts/lobby/QRCode.js"></script>
+
+    
+  </body>
+
+</html>

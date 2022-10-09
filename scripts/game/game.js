@@ -1,3 +1,5 @@
+const gameContainerComputedStyle = getComputedStyle(gameContainer);
+
 function game() {
   new KeyPressListener("ArrowUp", () => handleArrowPress(0, -1));
   new KeyPressListener("ArrowDown", () => handleArrowPress(0, 1));
@@ -95,28 +97,5 @@ function game() {
     const keyToRemove = getKeyString(x, y);
     gameContainer.removeChild(holeElements[keyToRemove]);
     delete holeElements[keyToRemove];
-  });
-
-  //Updates player name with text input
-  playerNameInput.addEventListener("change", (e) => {
-    const newName = e.target.value || createName();
-    playerNameInput.value = newName;
-    playerRef.update({
-      name: newName,
-    });
-  });
-
-  //Update player color on button click
-  playerColorButton.addEventListener("click", () => {
-    const mySkinIndex = playerColors.indexOf(players[playerId].color);
-    const nextColor = playerColors[mySkinIndex + 1] || playerColors[0];
-    playerRef.update({
-      color: nextColor,
-    });
-  });
-
-  //
-  testButton.addEventListener("click", () => {
-    drillHole();
   });
 }

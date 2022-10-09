@@ -7,8 +7,8 @@
         ".write": "auth != null && auth.uid == $uid"
       }
     },
-      "coins": {
-        ".write": "auth != null"
-      }
+    "holes": {
+      ".write": "auth != null"
+    }
   }
 }

@@ -1,0 +1,12 @@
+@import url('http://fonts.cdnfonts.com/css/arcade-classic');
+
+.arcade-text {
+  font-family: 'ArcadeClassic', sans-serif;
+  font-size: 32;
+  position: relative;
+  align-items: center
+}
+
+.index-content {
+  align-items: center
+}
