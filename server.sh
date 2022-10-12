@@ -1,3 +1,3 @@
 #!/bin/bash
 
-http-server -c 30 ./
+http-server -c 30 ./ -cors="*"

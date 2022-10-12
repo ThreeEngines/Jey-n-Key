@@ -17,8 +17,7 @@
       color: nextColor,
     });
   });
-
-  testButton.addEventListener("click", () => {
-    drillHole();
-  });
+  // testButton.addEventListener("click", () => {
+  //   drillHole();
+  // });
 })();
