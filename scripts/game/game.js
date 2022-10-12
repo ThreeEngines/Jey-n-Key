@@ -20,7 +20,7 @@ function game() {
       const characterState = players[key];
       let el = playerElements[key];
       // Now update the DOM
-      el.querySelector(".Character_name").innerText = characterState.name;
+      el.querySelector(".character-name").innerText = characterState.name;
       el.setAttribute("data-color", characterState.color);
       el.setAttribute("data-direction", characterState.direction);
       const left = tileSize * characterState.x + "px";
@@ -32,22 +32,22 @@ function game() {
     //Fires whenever a new node is added the tree
     const addedPlayer = snapshot.val();
     const characterElement = document.createElement("div");
-    characterElement.classList.add("Character", "grid-cell");
+    characterElement.classList.add("character", "grid-cell");
     if (addedPlayer.id === playerId) {
       characterElement.classList.add("you");
     }
     characterElement.innerHTML = `
-        <div class="Character_shadow grid-cell"></div>
-        <div class="Character_sprite grid-cell"></div>
-        <div class="Character_name-container">
-            <span class="Character_name"></span>
+        <div class="character-shadow grid-cell"></div>
+        <div class="character-sprite grid-cell"></div>
+        <div class="character-name-container">
+            <span class="character-name"></span>
         </div>
-        <div class="Character_you-arrow"></div>
+        <div class="character-you-arrow"></div>
     `;
     playerElements[addedPlayer.id] = characterElement;
 
     //Fill in some initial state
-    characterElement.querySelector(".Character_name").innerText =
+    characterElement.querySelector(".character-name").innerText =
       addedPlayer.name;
     characterElement.setAttribute("data-color", addedPlayer.color);
     characterElement.setAttribute("data-direction", addedPlayer.direction);
@@ -79,8 +79,8 @@ function game() {
     const holeElement = document.createElement("div");
     holeElement.classList.add("Coin", "grid-cell");
     holeElement.innerHTML = `
-      <div class="Coin_shadow grid-cell"></div>
-      <div class="Coin_sprite grid-cell"></div>
+      <div class="coin-shadow grid-cell"></div>
+      <div class="coin-sprite grid-cell"></div>
     `;
 
     // Position the Element

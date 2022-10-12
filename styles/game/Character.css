@@ -5,16 +5,16 @@
     height: var(--tileSize);
 }
 
-.Character {
+.character {
    transition: transform 0.4s;
 }
-.Character.you {
+.character.you {
     z-index: 1;
 }
-.Character.you .Character_you-arrow {
+.character.you .character-you-arrow {
     display: block;
 }
-.Character_you-arrow {
+.character-you-arrow {
     display: none;
     position: absolute;
     top:-18px;
@@ -23,34 +23,34 @@
     height: 5px;
     background: var(--arrow) no-repeat no-repeat;
 }
-.Character_sprite {
+.Character-sprite {
     overflow: hidden;
     top: -3px;
     background: var(--character);
 }
-.Character[data-direction="right"] .Character_sprite {
+.character[data-direction="right"] .Character_sprite {
     background-position-x: var(--tileSize);
 }
-.Character[data-color="red"] .Character_sprite {
+.character[data-color="red"] .Character_sprite {
     background-position-y: calc(var(--tileSize) * -1);
 }
-.Character[data-color="orange"] .Character_sprite {
+.character[data-color="orange"] .Character_sprite {
     background-position-y: calc(var(--tileSize) * -2);
 }
-.Character[data-color="yellow"] .Character_sprite {
+.character[data-color="yellow"] .Character_sprite {
     background-position-y: calc(var(--tileSize) * -3);
 }
-.Character[data-color="green"] .Character_sprite {
+.character[data-color="green"] .Character_sprite {
     background-position-y: calc(var(--tileSize) * -4);
 }
-.Character[data-color="purple"] .Character_sprite {
+.character[data-color="purple"] .Character_sprite {
     background-position-y: calc(var(--tileSize) * -5);
 }
-.Character_shadow {
+.character-shadow {
     background: url(/images/shadow.png) no-repeat no-repeat;
 }
 
-.Character_name-container {
+.character-name-container {
     position: absolute;
     top: -12px;
     left: -5px;
@@ -64,7 +64,7 @@
     white-space: nowrap;
     transform: scale(2);
 }
-.Character_coins {
+.character-coins {
     margin-left: 1px;
     color: gold;
 }

@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="../styles/lobby/letters.css" type="text/css">
     <link rel="stylesheet" href="../styles/waitingroom/Character.css" type="text/css">
     <link rel="stylesheet" href="../styles/waitingroom/WaitingList.css" type="text/css">
-    <script src="../scripts/thirdparty/qrcode.min.js"></script>
-    <script src="../scripts/thirdparty/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   
     <script src="../scripts/utils.js"></script>
   </head>
@@ -35,7 +35,7 @@
               <thead>
                   <tr>
                       <th>Color</th>
-                      <th>Player name</th>
+                      <th id="playersWaitingListHeader">Player name</th>
                   </tr>
               </thead>
                 <tbody id="playersWaitingList"></tbody>
@@ -45,7 +45,7 @@
 
       </div>
       <div class="start-button-container">
-        <button class="button start-game" id="Start-Game">GAME START!<i class="fa-solid fa-rotate"></i></button>
+        <button class="button start-game" id="Start-Game">START GAME!<i class="fa-solid fa-rotate"></i></button>
       </div>
     </div>
 
