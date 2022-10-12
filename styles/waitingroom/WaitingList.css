@@ -1,0 +1,55 @@
+.waitlist-container {
+    padding-left: 10vw;
+}
+
+.waitlist-div {
+    overflow: auto;
+}
+
+.waitlist-table {
+    margin-top: 0.5rem;
+    border-collapse: collapse;
+    /* margin-top: 10px 0; */
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.waitlist-table thead tr {
+    background-color: var(--qr-code-square-color);
+    color: #000;
+    text-align: left;
+}
+
+.waitlist-table th,
+.waitlist-table td {
+    padding: 12px 15px;
+}
+
+th {
+    font-weight: bold;
+    font-size: 20;
+    -webkit-text-stroke-color: chocolate;
+    -webkit-text-stroke-width: 0.5px;
+}
+td {
+    background: bisque;
+}
+
+.waitlist-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.waitlist-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.waitlist-table tbody tr:last-of-type {
+    border-bottom: 2px solid var(--qr-code-square-color);
+}
+
+.waitlist-table tbody tr.active-row {
+    font-weight: bold;
+    color: var(#000);
+}

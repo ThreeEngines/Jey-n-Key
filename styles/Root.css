@@ -1,108 +1,154 @@
-* {
-    box-sizing:border-box;
-  }
-  
-  .screen {
-    display: inline;
-  }
-  
-  .frame {
-    /* This is just for Pen decoration */
-    width: calc(var(--pixel-size) * 160);
-    height: calc(var(--pixel-size) * 144);
-    outline: var(--pixel-size) solid #fff;
-    z-index:1; 
-    position:relative;
-  }
-  
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background: var(--background-color);
-    font-family: 'Source Sans Pro', sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .player-info {
-    position: absolute;
-    top: 0;
-    left:0;
-    padding: 1em;
-    display: flex;
-    gap: 0.5em;
-    align-items: flex-end
-  }
-  
-  label {
-    display: block;
-    font-weight: bold;
-  }
-  
-  input[type="text"],
-  button {
-    font-family: inherit;
-    font-weight: bold;
-    font-size: 18px;
-    height: 44px;
-    border-radius: 4px;
-    outline: 0;
-  }
-  
-  input[type="text"] {
-    outline: 0;
-    padding-left: 0.5em;
-    border: 3px solid #222034;
-    width: 150px;
-    text-transform: uppercase;
-  }
-  input[type="text"]:focus {
-    border-color: #f000ff;
-  }
-  
-  .input_ip[type="text"] {
-    outline: 0;
-    padding-left: 0.5em;
-    border: 3px solid #222034;
-    width: 305px;
-    text-transform: uppercase;
-  }
+:root {
+  --arrow: url(/images/arrow.png);
+  --character: url(/images/characters_old.png);
+  --map: url(/images/map_old.png);
+  --tileSize: 16px;
+  --width: 240px;
+  --height: 208px;
 
-  button {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    background: #59ff5a;
-    border: 0;
-    border-bottom: 2px solid #1e830b;
-    cursor: pointer;
-  }
-  button:active {
-    position: relative;
-    top: 1px;
-  }
+  --qrcode-width: 240px;
+  --qrcode-height: 240px;
   
-  
-  /* Game map */
-  .game-container { 
-    position: relative;
-    width: var(--width);
-    height: var(--height);
-    background: var(--map) no-repeat no-repeat;
-    image-rendering: pixelated;
-  }  
-  
-  
-  /* Coins */
-  .Coin_sprite {
-    background: url(/images/coin.png) no-repeat no-repeat;
-    animation: coinFloat 0.8s linear infinite alternate-reverse;
+  --background-color: linear-gradient(180deg, #64BEFF -50%, #6e96ff 69.71%, #2a65ff 150%);
+
+  --table-color: #59ff5a;
+
+  --qr-code-square-color: #a15d22;
+}
+
+* {
+  box-sizing:border-box;
+}
+
+.screen {
+  display: inline;
+}
+
+.frame {
+  /* This is just for Pen decoration */
+  width: calc(var(--pixel-size) * 160);
+  height: calc(var(--pixel-size) * 144);
+  outline: var(--pixel-size) solid #fff;
+  z-index:1; 
+  position:relative;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--background-color);
+  font-family: 'Source Sans Pro', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.player-info {
+  position: absolute;
+  top: 0;
+  left:0;
+  padding: 1em;
+  display: flex;
+  gap: 0.5em;
+  align-items: flex-end
+}
+
+label {
+  display: block;
+  font-weight: bold;
+}
+
+input[type="text"],
+button {
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 18px;
+  height: 44px;
+  border-radius: 4px;
+  outline: 0;
+}
+
+input[type="text"] {
+  outline: 0;
+  padding-left: 0.5em;
+  border: 3px solid #222034;
+  width: 150px;
+  text-transform: uppercase;
+}
+input[type="text"]:focus {
+  border-color: #f000ff;
+}
+
+.input_ip[type="text"] {
+  outline: 0;
+  padding-left: 0.5em;
+  border: 3px solid #222034;
+  width: 305px;
+  text-transform: uppercase;
+}
+
+button {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  background: #59ff5a;
+  border: 0;
+  border-bottom: 2px solid #1e830b;
+  cursor: pointer;
+}
+button:active {
+  position: relative;
+  top: 1px;
+}
+
+
+/* Game map */
+.game-container { 
+  position: relative;
+  width: var(--width);
+  height: var(--height);
+  background: var(--map) no-repeat no-repeat;
+  image-rendering: pixelated;
+}
+
+
+/* Coins */
+.Coin_sprite {
+  background: url(/images/coin.png) no-repeat no-repeat;
+  animation: coinFloat 0.8s linear infinite alternate-reverse;
+}
+@keyframes coinFloat {
+  from { transform: translateY(0) }
+  to { transform: translateY(5px) }
+}
+.Coin_shadow {
+  background: url(/images/coin-shadow.png) no-repeat no-repeat;
+}
+
+
+
+
+/* <div id="loader" class="center"></div> */
+#loader {
+  border: 12px solid #59ff5a;
+  border-radius: 50%;
+  border-top: 12px solid #1e830b;
+  width: 70px;
+  height: 70px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+      transform: rotate(360deg);
   }
-  @keyframes coinFloat {
-    from { transform: translateY(0) }
-    to { transform: translateY(5px) }
-  }
-  .Coin_shadow {
-    background: url(/images/coin-shadow.png) no-repeat no-repeat;
-  }
+}
+
+.center {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}

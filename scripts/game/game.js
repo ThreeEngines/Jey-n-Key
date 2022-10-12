@@ -79,9 +79,9 @@ function game() {
     const holeElement = document.createElement("div");
     holeElement.classList.add("Coin", "grid-cell");
     holeElement.innerHTML = `
-        <div class="Coin_shadow grid-cell"></div>
-        <div class="Coin_sprite grid-cell"></div>
-        `;
+      <div class="Coin_shadow grid-cell"></div>
+      <div class="Coin_sprite grid-cell"></div>
+    `;
 
     // Position the Element
     const left = tileSize * hole.x + "px";

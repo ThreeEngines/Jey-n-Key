@@ -25,6 +25,7 @@ let playerElements = {};
 let holeElements = {};
 let holes = {};
 
+
 const gameContainer = document.querySelector(".game-container");
 const playerNameInput = document.querySelector("#player-name");
 const playerColorButton = document.querySelector("#player-color");
