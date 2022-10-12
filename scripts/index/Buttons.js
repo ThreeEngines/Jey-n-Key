@@ -1,10 +1,10 @@
-let generateButton = document.querySelector(".button");
+const generateButton = document.getElementById("QRCode-Generate");
 
 generateButton.addEventListener("click", () => {
-  redirect();
+  redirectToWaitingRoom();
 });
 
-function redirect() {
+function redirectToWaitingRoom() {
   let user_input = document.querySelector("#input_text");
   if (user_input.value != "") {
     location.href = `/views/lobby?IP=${user_input.value}`;

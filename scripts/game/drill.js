@@ -19,7 +19,6 @@ function drillHole() {
   const holeRef = firebase.database().ref(`holes/${key}`);
   holeRef.get().then((snapshot) => {
     if (snapshot.exists()) {
-      console.log(snapshot.val());
     } else {
       holeRef.set({
         isOpen: true,

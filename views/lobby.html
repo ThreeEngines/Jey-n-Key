@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="../styles/Root.css" type="text/css">
     <link rel="stylesheet" href="../styles/lobby/styles.css" type="text/css">
     <link rel="stylesheet" href="../styles/lobby/letters.css" type="text/css">
-    <link rel="stylesheet" href="../styles/GlobalVariables.css" type="text/css">
+    <link rel="stylesheet" href="../styles/waitingroom/WaitingList.css" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   
@@ -12,27 +12,53 @@
   </head>
 
   <body onload="generate()">
-    <div class="qrcode-wrapper">
-      <a class="arcade-text">Join  the game!</a>
-      
-      <div class="qr-code-container">
-        <div class="qr-code"></div>
+    <div id="loader" class="center"></div>
+
+    <div>
+      <div class="lobby-container">
+
+        <div class="qrcode-wrapper">
+          <a class="arcade-text">Join  the game!</a>
+          
+          <div class="qr-code-container">
+            <div class="qr-code"></div>
+          </div>
+        </div>
+
+        <div class="waitlist-container">
+          <div>
+            <a class="arcade-text">Players waiting</a>
+          </div>
+          <div class="waitlist-div">
+            <table class="waitlist-table">
+              <thead>
+                  <tr>
+                      <th>Color</th>
+                      <th>Player name</th>
+                  </tr>
+              </thead>
+              <tbody id="playersWaitingList"></tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
-
-      <button class="button start-game" type="submit">GAME START!<i class="fa-solid fa-rotate"></i></button>
-      <!-- TODO -->
-      <!--
-        Chamar a função game() ==> /scripts/game/game.js
-      //Begin the game now that we are signed in
-      // game();
-        Atualizar o Firebase para redirecionar todo mundo para a pagina 'gameplay'
-    -->
-
+      <div class="start-button-container">
+        <button class="button start-game" id="Start-Game">GAME START!<i class="fa-solid fa-rotate"></i></button>
+      </div>
     </div>
-    <script src="../scripts/GlobalVariables.js"></script>
-    <script src="../scripts/lobby/QRCode.js"></script>
 
-    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script src="../scripts/Loader.js"></script>
+
+    <script src="../scripts/GlobalVariables.js"></script>
+    <script src="../scripts/lobby/Buttons.js"></script>
+    <script src="../scripts/lobby/QRCode.js"></script>
+    <script src="../scripts/database.js"></script>
+    <script src="../scripts/waitingroom/WaitingList.js"></script>
   </body>
 
 </html>

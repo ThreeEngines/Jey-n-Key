@@ -1,4 +1,5 @@
 (function () {
+
   firebase.auth().onAuthStateChanged((user) => {
     // console.log(user)
     if (user) {
@@ -20,6 +21,10 @@
         y,
       });
 
+      
+      refreshWaitingList()
+      disableLoader()
+
       //Remove me from Firebase when I diconnect
       playerRef.onDisconnect().remove();
     } else {
@@ -27,12 +32,4 @@
     }
   });
 
-  firebase
-    .auth()
-    .signInAnonymously()
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-    });
 })();

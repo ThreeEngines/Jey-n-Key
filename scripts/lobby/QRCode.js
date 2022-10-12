@@ -6,7 +6,7 @@ function generate() {
   };
 
   qr_code_element.style = "";
-  qr_code_element.innerText = "`${user_input.value}`";
+  qr_code_element.innerText = `${user_input.value}`;
   qr_code_element.innerHTML = "";
 
   var qrcode = new QRCode(qr_code_element, {
@@ -27,7 +27,9 @@ function generate() {
   let plainTextLink = document.createElement("a");
   plainTextLink.setAttribute("class", "plain-text-link");
   plainTextLink.setAttribute("title", "Plain text waiting roomurl");
+  plainTextLink.setAttribute("href", `${user_input.value}`)
   plainTextLink.innerText = `${user_input.value}`;
 
   plainText.appendChild(plainTextLink);
+  disableLoader()
 }
