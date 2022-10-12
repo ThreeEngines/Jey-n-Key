@@ -20,7 +20,7 @@ function game() {
       const characterState = players[key];
       let el = playerElements[key];
       // Now update the DOM
-      el.querySelector(".character-name").innerText = characterState.name;
+      // el.querySelector(".character-name").innerText = characterState.name;
       el.setAttribute("data-color", characterState.color);
       el.setAttribute("data-direction", characterState.direction);
       const left = tileSize * characterState.x + "px";

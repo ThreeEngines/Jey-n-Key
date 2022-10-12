@@ -21,8 +21,7 @@
   gamesetRef.on("value", (snapshot) => {
     const gameset = snapshot.val();
     if (gameset.status === "START") {
-      window.location.assign("/views/gameset");
-      // location.href = `/views/gameset?player=${playerId}`;
+      location.href = `/views/gameset`;
     }
   });
 

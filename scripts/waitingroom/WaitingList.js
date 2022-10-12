@@ -35,5 +35,6 @@ function refreshWaitingList() {
 
     header.innerText = `Player name (${itemCount})`;
     list.innerHTML = listItems;
+    disableLoader();
   });
 }
