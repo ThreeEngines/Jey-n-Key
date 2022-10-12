@@ -22,8 +22,11 @@ function refreshWaitingList(){
 
             listItems += `
                 <tr id='${key}' class='${itemClass}'>
-                    <td>${players[key].color}</td>
-                    <td>${players[key].name}</td>
+                    <td class="character-column"><div class="Character_sprite grid-cell"></div></td>
+                    <td style="
+                    padding-top: 100px;
+                    padding-bottom: 100px;
+                ">${players[key].name}</td>
                 </tr>
             `;
         });

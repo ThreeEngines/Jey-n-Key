@@ -1,0 +1,15 @@
+/* Characters */
+.grid-cell {
+    position: relative;
+    width: var(--tileSize);
+    height: var(--tileSize);
+    margin-left: 1rem;
+}
+
+.Character_sprite {
+    background: var(--character);
+}
+
+.character-column {
+    vertical-align: super;
+}
