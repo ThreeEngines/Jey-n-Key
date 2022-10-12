@@ -8,6 +8,7 @@
 
 .character-sprite {
     background: var(--character);
+    transform: scale(1.5);
 }
 .character[data-direction="right"] .character-sprite {
     background-position-x: var(--tileSize);
@@ -31,4 +32,22 @@
 .character-name {
     width: inherit;
     margin-left: 1.3rem;
+}
+
+
+/* TESTE */
+.character.you {
+    z-index: 1;
+}
+.character.you .character-you-arrow {
+    display: block;
+}
+.character-you-arrow {
+    display: none;
+    position: absolute;
+    top:-18px;
+    left: 5px;
+    width: 7px;
+    height: 5px;
+    background: var(--arrow) no-repeat no-repeat;
 }

@@ -27,9 +27,9 @@ function generate() {
   let plainTextLink = document.createElement("a");
   plainTextLink.setAttribute("class", "plain-text-link");
   plainTextLink.setAttribute("title", "Plain text waiting roomurl");
-  plainTextLink.setAttribute("href", `${user_input.value}`)
+  plainTextLink.setAttribute("href", `${user_input.value}`);
   plainTextLink.innerText = `${user_input.value}`;
 
   plainText.appendChild(plainTextLink);
-  disableLoader()
+  disableLoader();
 }

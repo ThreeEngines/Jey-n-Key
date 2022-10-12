@@ -29,7 +29,7 @@ function refreshWaitingList() {
                       </div>
                     </td>
                     <td class="character-name-column"><div class="character-name">${players[key].name}</div></td>
-                </tr>                
+                </tr>
             `;
     });
 

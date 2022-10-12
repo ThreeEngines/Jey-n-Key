@@ -1,5 +1,4 @@
 (function () {
-
   firebase.auth().onAuthStateChanged((user) => {
     // console.log(user)
     if (user) {
@@ -14,6 +13,7 @@
 
       playerRef.set({
         id: playerId,
+        online: true,
         name,
         direction: "right",
         color: randomFromArray(playerColors),
@@ -21,15 +21,18 @@
         y,
       });
 
-      
-      refreshWaitingList()
-      disableLoader()
+      window.localStorage.setItem("playerId", playerId);
+
+      refreshWaitingList();
+      disableLoader();
 
       //Remove me from Firebase when I diconnect
-      playerRef.onDisconnect().remove();
+      //playerRef.onDisconnect().remove();
+      playerRef.onDisconnect().update({
+        online: false,
+      });
     } else {
       //You're logged out.
     }
   });
-
 })();
