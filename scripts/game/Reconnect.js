@@ -7,6 +7,9 @@
 
       playerRef = firebase.database().ref(`players/${playerId}`);
       gamesetRef = firebase.database().ref(`gameset`);
+      gamesetRef.get().then((snapshot) => {
+        gamesetStatus = snapshot.val().status
+      })
       playerRef.get().then((snapshot) => {
         if (snapshot.exists()) {
           playerRef.update({

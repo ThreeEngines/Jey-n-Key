@@ -2,9 +2,9 @@
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       //You're logged in!
-      // playerId = window.localStorage.getItem("playerId");
-      // playerName = window.localStorage.getItem("playerName");
-      // playerColor = window.localStorage.getItem("playerColor");
+      playerId = window.localStorage.getItem("playerId");
+      playerName = window.localStorage.getItem("playerName");
+      playerColor = window.localStorage.getItem("playerColor");
       allPlayersRef = firebase.database().ref(`players`);
 
       if (isDefined(playerId)) playerId = user.uid;

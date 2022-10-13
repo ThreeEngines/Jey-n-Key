@@ -17,15 +17,17 @@ function runtime() {
     case GAMESET_LOADING:
       bannerElement.innerText = "";
       seeker = getRandomPlayer(players);
-      setStatusToHide(seeker.id);
+      setStatusToSeek(seeker.id);
       play();
       break;
     case GAMESET_HIDE:
-      setStatusToSeek(seeker);
+      console.log(`Seek -> ${seeker.name}`);
+      setStatusToSeek(seeker.id);
       play();
       break;
     case GAMESET_SEEK:
       seeker = getRandomPlayer(players);
+      console.log(`Hide! Next Seeker -> ${seeker.name}`);
       setStatusToHide(seeker.id);
       play();
       break;
