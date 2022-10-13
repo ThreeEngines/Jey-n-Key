@@ -1,6 +1,7 @@
 let qr_code_element = document.querySelector(".qr-code");
 
-function generate() {
+function generateQRCode() {
+  window.localStorage.setItem("IP", urlParam("IP"));
   let user_input = {
     value: `http://${urlParam("IP")}:8080/views/waitingroom`,
   };
@@ -27,9 +28,8 @@ function generate() {
   let plainTextLink = document.createElement("a");
   plainTextLink.setAttribute("class", "plain-text-link");
   plainTextLink.setAttribute("title", "Plain text waiting roomurl");
-  plainTextLink.setAttribute("href", `${user_input.value}`)
+  plainTextLink.setAttribute("href", `${user_input.value}`);
   plainTextLink.innerText = `${user_input.value}`;
 
   plainText.appendChild(plainTextLink);
-  disableLoader()
 }

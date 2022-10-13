@@ -1,66 +1,80 @@
 .waitlist-container {
-    padding-left: 10vw;
-    overflow: scroll;
+  padding-left: 10vw;
 }
 
-.waitlist-div {
-    overflow: scroll;
+thead,
+tbody {
+  display: grid;
+  width: 100%;
 }
 
-tbody.scroll {
-    margin:4px, 4px;
-    padding:4px;
-    width: 500px;
-    height: 110px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    text-align:justify;
+thead, tbody, tr, td {
+  width: 100%;
 }
+td {
+  width: fit-content;
+}
+
+tbody {
+  max-height: 20.5rem;
+  overflow-y: auto; /* Trigger vertical scroll    */
+  overflow-x: hidden; /* Hide the horizontal scroll */
+}
+
+table {
+    width: 100%; /* Optional */
+}
+
 
 .waitlist-table {
-    margin-top: 0.5rem;
-    border-collapse: collapse;
-    /* margin-top: 10px 0; */
-    font-size: 0.9em;
-    font-family: sans-serif;
-    min-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  margin-top: 0.5rem;
+  border-collapse: collapse;
+  /* margin-top: 10px 0; */
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
 .waitlist-table thead tr {
-    background-color: var(--qr-code-square-color);
-    color: #000;
-    text-align: left;
+  background-color: var(--qr-code-square-color);
+  color: #000;
+  text-align: left;
+}
+
+tr {
+  width: 100%;
+  background-color: bisque;
 }
 
 .waitlist-table th,
 .waitlist-table td {
-    padding: 12px 15px;
+  padding: 12px 15px;
 }
 
 th {
-    font-weight: bold;
-    font-size: 20;
-    -webkit-text-stroke-color: chocolate;
-    -webkit-text-stroke-width: 0.5px;
+  font-weight: bold;
+  font-size: 20;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: 0.5px;
 }
 td {
-    background: bisque;
+  background: bisque;
 }
 
 .waitlist-table tbody tr {
-    border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
 }
 
 .waitlist-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+  background-color: bisque;
 }
 
 .waitlist-table tbody tr:last-of-type {
-    border-bottom: 2px solid var(--qr-code-square-color);
+  border-bottom: 2px solid var(--qr-code-square-color);
 }
 
 .waitlist-table tbody tr.active-row {
-    font-weight: bold;
-    color: var(#000);
+  font-weight: bold;
+  color: var(#000);
 }

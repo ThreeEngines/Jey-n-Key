@@ -4,6 +4,9 @@ const height = 208;
 const width = 240;
 const QRCodeHeight = 300;
 const QRCodeWidth = 300;
+const sleepHoleSize = 50;
+
+const roundTime = 10000; //ms
 
 const mapData = {
   minX: 0,
@@ -17,16 +20,34 @@ const mapData = {
 const playerColors = ["blue", "red", "orange", "yellow", "green", "purple"];
 const prefixName = randomFromArray(["COOL", "SUPER", "SOFT", "BUFF", "DOPE"]);
 
+const adminRole = "HOST";
+let gamesetStatus;
 let playerId;
 let playerRef;
+let playerName;
+let playerColor;
+
+let gamesetRef;
+
 let players = {};
+let allPlayersRef;
 
 let playerElements = {};
 let holeElements = {};
 let holes = {};
 
-
 const gameContainer = document.querySelector(".game-container");
+const gameScene = document.getElementById("game-scene");
+const seekerElement = document.getElementById("game-seeker");
+const bannerElement = document.getElementById("game-info");
 const playerNameInput = document.querySelector("#player-name");
 const playerColorButton = document.querySelector("#player-color");
-const testButton = document.querySelector("#player-test");
+
+// GAMESET STATUS
+const GAMESET_LOADING = "LOADING";
+const GAMESET_GAMING = "GAMING";
+const GAMESET_LOBBY = "LOBBY";
+
+const GAMESET_DANGER = "DANGER";
+const GAMESET_SEEK = "SEEK";
+const GAMESET_HIDE = "HIDE";

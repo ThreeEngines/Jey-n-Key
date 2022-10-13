@@ -1,65 +1,49 @@
 <html>
-  <head>    
-    <title>Jey n' Key - Lobby</title>
-    <link rel="stylesheet" href="../styles/Root.css" type="text/css">
-    <link rel="stylesheet" href="../styles/lobby/styles.css" type="text/css">
-    <link rel="stylesheet" href="../styles/lobby/letters.css" type="text/css">
-    <link rel="stylesheet" href="../styles/waitingroom/Character.css" type="text/css">
-    <link rel="stylesheet" href="../styles/waitingroom/WaitingList.css" type="text/css">
-    <script src="../scripts/thirdparty/qrcode.min.js"></script>
-    <script src="../scripts/thirdparty/sweetalert.min.js"></script>
-  
-    <script src="../scripts/utils.js"></script>
-  </head>
-
-  <body onload="generate()">
-    <div id="loader" class="center"></div>
-
-    <div>
-      <div class="lobby-container">
-
-        <div class="qrcode-wrapper">
-          <a class="arcade-text">Join  the game!</a>
-          
-          <div class="qr-code-container">
-            <div class="qr-code"></div>
-          </div>
+    <head>
+        <title>Jey n' Key - Lobby</title>
+        <link rel="stylesheet" href="../styles/Root.css" type="text/css">
+        <link rel="stylesheet" href="../styles/lobby/styles.css" type="text/css">
+        <link rel="stylesheet" href="../styles/lobby/letters.css" type="text/css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="../scripts/utils.js"></script>
+        <script src="../scripts/GlobalVariables.js"></script>
+    </head>
+    <body onload="generateQRCode();">
+        <div id="loader" class="center"></div>
+        <div>
+            <div class="lobby-container">
+                <div class="qrcode-wrapper">
+                    <a class="arcade-text">Join  the game!</a>
+                    <div class="qr-code-container">
+                        <div class="qr-code"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="waitlist-container">
+                        <a class="arcade-text">Players waiting</a>
+                    </div>
+                    <div id="waitlist-component"></div>
+                </div>
+            </div>
+            <div class="start-button-container">
+                <button class="button start-game" id="Start-Game">
+                    START GAME!
+                    <i class="fa-solid fa-rotate"></i>
+                </button>
+            </div>
         </div>
-
-        <div class="waitlist-container">
-          <div>
-            <a class="arcade-text">Players waiting</a>
-          </div>
-          <div class="waitlist-div">
-            <table class="waitlist-table">
-              <thead>
-                  <tr>
-                      <th>Color</th>
-                      <th>Player name</th>
-                  </tr>
-              </thead>
-                <tbody id="playersWaitingList"></tbody>
-            </table>
-          </div>
-        </div>
-
-      </div>
-      <div class="start-button-container">
-        <button class="button start-game" id="Start-Game">GAME START!<i class="fa-solid fa-rotate"></i></button>
-      </div>
-    </div>
-
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-
-    <script src="../scripts/Loader.js"></script>
-
-    <script src="../scripts/GlobalVariables.js"></script>
-    <script src="../scripts/lobby/Buttons.js"></script>
-    <script src="../scripts/lobby/QRCode.js"></script>
-    <script src="../scripts/database.js"></script>
-    <script src="../scripts/waitingroom/WaitingList.js"></script>
-  </body>
-
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+        <script src="../scripts/components/LoadWaitList.js"></script>
+        
+        <script src="../scripts/Loader.js"></script>
+        <script src="../scripts/lobby/QRCode.js"></script>
+        <script src="../scripts/database.js"></script>
+        <script src="../scripts/lobby/ConnectHost.js"></script>
+        <script src="../scripts/lobby/Buttons.js"></script>
+        <script src="../scripts/lobby/Cleaner.js"></script>
+        <script src="../scripts/game/host/GameSetControl.js"></script>
+    </body>
 </html>

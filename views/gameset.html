@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>Jey n' Key</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&display=swap" rel="stylesheet">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <link rel="stylesheet" href="../styles/game/Character.css" type="text/css">
+        <link rel="stylesheet" href="../styles/game/styles.css" type="text/css">
+        <link rel="stylesheet" href="../styles/lobby/letters.css" type="text/css">
+        <link rel="stylesheet" href="../styles/Root.css" type="text/css">
+        <script src="../scripts/game/KeyPressListener.js"></script>
+    </head>
+    <body>
+        <div id="loader" class="center"></div>
+        <div class="screen">
+            <div id="hostcontrols-component"></div>
+            <div class="game-container">
+                <a id="game-info" class="arcade-text arcade-banner index-content">
+                    <a id="clock"></a>
+                </a>
+                <div id="game-scene" class="scene">
+                    <div id="game-seeker" class="seeker"></div>
+                </div>
+            </div>
+            <div id="dpad-component"></div>
+            <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+            <script src="../scripts/utils.js"></script>
+            <script src="../scripts/GlobalVariables.js"></script>
+            <script src="../scripts/components/LoadDPAD.js"></script>
+            <script src="../scripts/Loader.js"></script>
+            <script src="../scripts/database.js"></script>
+            <script src="../scripts/game/host/HostListener.js"></script>
+            <script src="../scripts/game/Reconnect.js"></script>
+            <script src="../scripts/game/GameSetListener.js"></script>
+            <script src="../scripts/game/game.js"></script>
+            <script src="../scripts/game/drill.js"></script>
+            <script src="../scripts/game/host/GameSetControl.js"></script>
+            <script src="../scripts/components/LoadHostControls.js"></script>
+            <script src="../scripts/game/host/GameSetScheduler.js"></script>
+        </div>
+    </body>
+</html>
