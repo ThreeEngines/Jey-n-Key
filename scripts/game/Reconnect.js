@@ -2,47 +2,54 @@
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       //You're logged in!
-      allPlayersRef = firebase.database().ref(`players`);
-      playerId = window.localStorage.getItem("playerId");
-
-      playerRef = firebase.database().ref(`players/${playerId}`);
+      allPlayersRef = firebase.database().ref(`players/${GAMESET_GAMING}`);
       gamesetRef = firebase.database().ref(`gameset`);
       gamesetRef.get().then((snapshot) => {
-        gamesetStatus = snapshot.val().status
-      })
+        gamesetStatus = snapshot.val().status;
+      });
+
+      playerId = urlParam("playerId");
+      playerRef = firebase
+        .database()
+        .ref(`players/${GAMESET_GAMING}/${playerId}`);
+      // The player exists?
       playerRef.get().then((snapshot) => {
         if (snapshot.exists()) {
-          playerRef.update({
-            place: GAMESET_GAMING,
-            online: true,
-            alive: true,
-          });
-
+          pulse();
           playerName = snapshot.val().name;
           playerColor = snapshot.val().color;
-          if (snapshot.val().role === adminRole) {
-            allPlayersListener();
-            enableHostControls();
-            startGame();
-          } else {
-            enableDPAD();
-            enableKeyListeners();
-            window.localStorage.removeItem("playerId");
-            window.localStorage.removeItem("playerName");
-            //Remove me from Firebase when I diconnect
-            playerRef.onDisconnect().remove();
-            enableGameSetListener();
-          }
+          enableDPAD();
+          enableKeyListeners();
+          playerRef.onDisconnect().update({
+            online: false,
+          });
+          enableGameSetListener();
         } else {
-          swal({
-            title: "How can I say that?...",
-            icon: "error",
-            text: "You can't join this game. It is already started. Please, take a set and relax, the next set will start soon.",
-          }).then(function () {
-            location.href = `/views/waitingroom`;
+          // Or is it the host?
+          playerRef = firebase.database().ref(`players/${playerId}`);
+          playerRef.get().then((snapshot) => {
+            if (snapshot.exists()) {
+              pulse();
+              allPlayersListener();
+              enableHostControls();
+              startGame();
+            } else {
+              // If it is not a player or the host, go back to the lobby.
+              swal({
+                title: "How can I say that?...",
+                icon: "error",
+                text: `You can't join this game. It is already started. Please, take a set and relax, the next set will start soon.
+                      \nYou'll be redirected in ${swalRedirectTimer} seconds.`,
+                timer: swalRedirectTimer * 1000,
+              }).then(function () {
+                location.href = `/views/waitingroom`;
+              });
+            }
           });
         }
       });
+
+      //Load timeout before start the game board
       setTimeout(() => {
         game();
       }, 3000);
@@ -51,3 +58,10 @@
     }
   });
 })();
+
+function pulse() {
+  playerRef.update({
+    online: true,
+    alive: true,
+  });
+}

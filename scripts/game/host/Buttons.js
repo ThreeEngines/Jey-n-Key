@@ -4,7 +4,7 @@ const testButton = document.getElementById("player-test");
 lobbyButton.addEventListener("click", () => {
   setStatusToWaitingRoom();
   const ip = window.localStorage.getItem("IP");
-  location.href = `/views/lobby?IP=${ip}`;
+  location.href = `/views/lobby?IP=${ip}&playerId=${playerId}`;
 });
 
 testButton.addEventListener("click", () => {

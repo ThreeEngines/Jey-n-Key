@@ -1,4 +1,31 @@
 //Misc Helpers
+var urlParam = function (name, w) {
+  w = w || window;
+  var rx = new RegExp("[&|?]" + name + "=([^&#]+)"),
+    val = w.location.search.match(rx);
+  return !val ? "" : val[1];
+};
+
+function setUrlParams(params) {
+  var newurl =
+    window.location.protocol +
+    "//" +
+    window.location.host +
+    window.location.pathname +
+    `${params}`;
+  window.history.pushState({ path: newurl }, "", newurl);
+}
+
+function isDefined(param) {
+  return !(
+    param == "" ||
+    param == "null" ||
+    param == "undefined" ||
+    param == null ||
+    param == undefined
+  );
+}
+
 function randomFromArray(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
@@ -72,10 +99,3 @@ function randomIntFromInterval(min, max) {
   // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
-
-var urlParam = function (name, w) {
-  w = w || window;
-  var rx = new RegExp("[&|?]" + name + "=([^&#]+)"),
-    val = w.location.search.match(rx);
-  return !val ? "" : val[1];
-};

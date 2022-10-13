@@ -6,7 +6,10 @@ const QRCodeHeight = 300;
 const QRCodeWidth = 300;
 const sleepHoleSize = 50;
 
-const roundTime = 10000; //ms
+// Timers => seconds
+const roundTime = 10;
+const swalRedirectTimer = 10;
+const garbageCollectorTime = 4;
 
 const mapData = {
   minX: 0,
@@ -30,6 +33,10 @@ let playerColor;
 let gamesetRef;
 
 let players = {};
+
+let allPlayersOnLobbyRef;
+let allPlayersAliveRef;
+let allPlayersDeadRef;
 let allPlayersRef;
 
 let playerElements = {};
@@ -45,7 +52,8 @@ const playerColorButton = document.querySelector("#player-color");
 
 // GAMESET STATUS
 const GAMESET_LOADING = "LOADING";
-const GAMESET_GAMING = "GAMING";
+const GAMESET_WATCHING = "DEAD";
+const GAMESET_GAMING = "ALIVE";
 const GAMESET_LOBBY = "LOBBY";
 
 const GAMESET_DANGER = "DANGER";

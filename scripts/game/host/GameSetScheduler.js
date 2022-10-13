@@ -12,28 +12,28 @@ function runtime() {
   //   const ip = window.localStorage.getItem("IP");
   //   location.href = `/views/lobby?IP=${ip}`;
   // }
-  console.log(`Executing set: ${gamesetStatus}`);
-  switch (gamesetStatus) {
-    case GAMESET_LOADING:
-      bannerElement.innerText = "";
-      seeker = getRandomPlayer(players);
-      setStatusToSeek(seeker.id);
-      play();
-      break;
-    case GAMESET_HIDE:
-      console.log(`Seek -> ${seeker.name}`);
-      setStatusToSeek(seeker.id);
-      play();
-      break;
-    case GAMESET_SEEK:
-      seeker = getRandomPlayer(players);
-      console.log(`Hide! Next Seeker -> ${seeker.name}`);
-      setStatusToHide(seeker.id);
-      play();
-      break;
-    default:
-      break;
-  }
+  // console.log(`Executing set: ${gamesetStatus}`);
+  // switch (gamesetStatus) {
+  //   case GAMESET_LOADING:
+  //     bannerElement.innerText = "";
+  //     seeker = getRandomPlayer(players);
+  //     setStatusToSeek(seeker.id);
+  //     play();
+  //     break;
+  //   case GAMESET_HIDE:
+  //     console.log(`Seek -> ${seeker.name}`);
+  //     setStatusToSeek(seeker.id);
+  //     play();
+  //     break;
+  //   case GAMESET_SEEK:
+  //     seeker = getRandomPlayer(players);
+  //     console.log(`Hide! Next Seeker -> ${seeker.name}`);
+  //     setStatusToHide(seeker.id);
+  //     play();
+  //     break;
+  //   default:
+  //     break;
+  // }
 }
 
 function play() {

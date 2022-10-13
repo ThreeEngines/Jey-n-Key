@@ -16,11 +16,7 @@ function game() {
     //Fires whenever a change occurs
     players = snapshot.val() || {};
     Object.keys(players).forEach((key) => {
-      if (
-        players[key].role != adminRole &&
-        players[key].alive &&
-        playerElements[key] != null
-      ) {
+      if (playerElements[key] != null) {
         const characterState = players[key];
         let el = playerElements[key];
         el.setAttribute("data-color", characterState.color);
@@ -28,10 +24,6 @@ function game() {
         const left = tileSize * characterState.x + "px";
         const top = tileSize * characterState.y - 4 + "px";
         el.style.transform = `translate3d(${left}, ${top}, 0)`;
-      } else if (playerElements[key] != null && players[key].alive) {
-        gameScene.removeChild(playerElements[key]);
-        if (playerId == key) disableControls();
-        delete playerElements[key];
       }
     });
   });
