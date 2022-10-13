@@ -1,18 +1,31 @@
 function scheduleOfflinePlayerRemoval() {
-  allPlayersRef.on("child_changed", (player) => {
-    if (player.val().online == false) {
-      setTimeout(function () {
-        const childRef = firebase.database().ref(`players/${player.val().id}`);
-        childRef.get().then((snapshot) => {
-          snapshot.val().online == false ? childRef.remove() : null;
-        });
-      }, 5000);
-    }
+  allPlayersOnLobbyRef.get().then((snapshot) => {
+    let players = snapshot.val() || {};
+    Object.keys(players).forEach((key) => {
+      secondChange(players[key], key);
+    });
   });
+
+  allPlayersOnLobbyRef.on("child_changed", (player) => {
+    secondChange(player.val(), player.val().id);
+  });
+}
+function secondChange(player, key) {
+  if (player.online == false) {
+    setTimeout(function () {
+      const childRef = firebase
+        .database()
+        .ref(`players/${GAMESET_LOBBY}/${key}`);
+      childRef.get().then((snapshot) => {
+        !snapshot.val()?.online ? childRef.remove() : null;
+      });
+    }, garbageCollectorTime * 1000);
+  }
 }
 
 function removeOlderHosts() {
-  allPlayersRef.get().then((snapshot) => {
+  let playersRef = firebase.database().ref(`players`);
+  playersRef.get().then((snapshot) => {
     players = snapshot.val() || {};
     Object.keys(players).forEach((key) => {
       if (players[key].role == adminRole && players[key].id != playerId) {

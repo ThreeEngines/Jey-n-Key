@@ -11,9 +11,10 @@ let itemCount = 0;
 
 function refreshWaitingList() {
   // Listener for any new player
-  allPlayersRef.on("child_added", (snapshot) => {
+  allPlayersOnLobbyRef.on("child_added", (snapshot) => {
     player = snapshot.val() || {};
     if (player.role != adminRole) {
+      let online = player.online ? "" : " disconnected";
       itemClass = player.id == playerId ? "active-row you" : "list-item";
       itemCount++;
       header.innerText = `Player name (${itemCount})`;
@@ -24,7 +25,7 @@ function refreshWaitingList() {
                 <div class="character character-sprite grid-cell"></div>
               </div>
             </td>
-            <td class="character-name-column"><div class="character-name">${player.name}</div></td>
+            <td class="character-name-column"><div class="character-name${online}">${player.name}</div></td>
         </tr>
       `;
     }
@@ -32,7 +33,7 @@ function refreshWaitingList() {
   });
 
   // Listener for any player left
-  allPlayersRef.on("child_removed", (snapshot) => {
+  allPlayersOnLobbyRef.on("child_removed", (snapshot) => {
     player = snapshot.val() || {};
     if (player.role != adminRole) {
       itemCount--;
@@ -45,9 +46,10 @@ function refreshWaitingList() {
   });
 
   // Listener for any player change
-  allPlayersRef.on("child_changed", (snapshot) => {
+  allPlayersOnLobbyRef.on("child_changed", (snapshot) => {
     player = snapshot.val() || {};
     if (player.role != adminRole) {
+      let online = player.online ? "" : " disconnected";
       const updatedChild = document.getElementById(player.id);
       updatedChild.innerHTML = `
           <td class="character-color-column">
@@ -55,7 +57,7 @@ function refreshWaitingList() {
               <div class="character character-sprite grid-cell"></div>
             </div>
           </td>
-          <td class="character-name-column"><div class="character-name">${player.name}</div></td>
+          <td class="character-name-column"><div class="character-name${online}">${player.name}</div></td>
         `;
 
       disableLoader();

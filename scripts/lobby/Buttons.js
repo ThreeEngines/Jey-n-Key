@@ -10,7 +10,7 @@ startGameButton.addEventListener("click", () => {
     }).then(function (isConfirm) {
       if (isConfirm) {
         setStatusToLoading();
-        location.href = `/views/gameset`;
+        location.href = `/views/gameset?playerId=${playerId}`;
       }
     });
   }
