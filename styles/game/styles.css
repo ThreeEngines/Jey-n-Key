@@ -1,5 +1,9 @@
 * {
-  box-sizing:border-box;
+  box-sizing: border-box;
+}
+
+.scene {
+  display: flex;
 }
 
 .screen {
@@ -11,16 +15,17 @@
   width: calc(var(--pixel-size) * 160);
   height: calc(var(--pixel-size) * 144);
   outline: var(--pixel-size) solid #fff;
-  z-index:1; 
-  position:relative;
+  z-index: 1;
+  position: relative;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
   background: var(--background-color);
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,11 +34,11 @@ html, body {
 .player-info {
   position: absolute;
   top: 0;
-  left:0;
+  left: 0;
   padding: 1em;
   display: flex;
   gap: 0.5em;
-  align-items: flex-end
+  align-items: flex-end;
 }
 
 label {
@@ -75,16 +80,14 @@ button:active {
   top: 1px;
 }
 
-
 /* Game map */
-.game-container { 
+.game-container {
   position: relative;
   width: var(--width);
   height: var(--height);
   background: var(--map) no-repeat no-repeat;
   image-rendering: pixelated;
-}  
-
+}
 
 /* Coins */
 .coin-sprite {
@@ -92,8 +95,12 @@ button:active {
   animation: coinFloat 0.8s linear infinite alternate-reverse;
 }
 @keyframes coinFloat {
-  from { transform: translateY(0) }
-  to { transform: translateY(5px) }
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(5px);
+  }
 }
 .coin-shadow {
   background: url(/images/coin-shadow.png) no-repeat no-repeat;

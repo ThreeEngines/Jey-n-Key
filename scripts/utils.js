@@ -2,6 +2,17 @@
 function randomFromArray(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
+
+function countPlayers(players) {
+  return Object.keys(players).length;
+}
+
+function getRandomPlayer(players) {
+  let keys = Object.keys(players);
+  let random = Math.floor(Math.random() * keys.length);
+  return players[keys[random]];
+}
+
 function getKeyString(x, y) {
   return `${x}x${y}`;
 }
@@ -62,11 +73,9 @@ function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-
-
-var urlParam = function(name, w){
+var urlParam = function (name, w) {
   w = w || window;
-  var rx = new RegExp('[\&|\?]'+name+'=([^\&\#]+)'),
-      val = w.location.search.match(rx);
-  return !val ? '':val[1];
-}
+  var rx = new RegExp("[&|?]" + name + "=([^&#]+)"),
+    val = w.location.search.match(rx);
+  return !val ? "" : val[1];
+};

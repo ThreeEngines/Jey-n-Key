@@ -1,18 +1,17 @@
 const startGameButton = document.getElementById("Start-Game");
-const gamesetRef = firebase.database().ref(`gameset`);
-
-function preparingSet() {
-  gamesetRef.set({
-    status: "PREPARING",
-    timer: "",
-    rounds: 0,
-  });
-}
 
 startGameButton.addEventListener("click", () => {
-  gamesetRef.set({
-    status: "START",
-    timer: "",
-    rounds: 0,
-  });
+  if (itemCount < 4) {
+    swal({
+      title: "That many people?",
+      icon: "warning",
+      buttons: ["I'll wait!", "Go for it!"],
+      text: "With few friends maybe not so much fun.",
+    }).then(function (isConfirm) {
+      if (isConfirm) {
+        setStatusToLoading();
+        location.href = `/views/gameset`;
+      }
+    });
+  }
 });

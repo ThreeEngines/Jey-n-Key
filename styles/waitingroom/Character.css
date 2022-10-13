@@ -8,7 +8,7 @@
 
 .character-sprite {
     background: var(--character);
-    transform: scale(1.5);
+    transform: scale(1.75);
 }
 .character[data-direction="right"] .character-sprite {
     background-position-x: var(--tileSize);

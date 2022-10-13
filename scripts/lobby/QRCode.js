@@ -1,6 +1,7 @@
 let qr_code_element = document.querySelector(".qr-code");
 
-function generate() {
+function generateQRCode() {
+  window.localStorage.setItem("IP", urlParam("IP"));
   let user_input = {
     value: `http://${urlParam("IP")}:8080/views/waitingroom`,
   };
@@ -31,5 +32,4 @@ function generate() {
   plainTextLink.innerText = `${user_input.value}`;
 
   plainText.appendChild(plainTextLink);
-  disableLoader();
 }

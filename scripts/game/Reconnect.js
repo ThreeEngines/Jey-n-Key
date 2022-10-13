@@ -1,33 +1,48 @@
 (function () {
   firebase.auth().onAuthStateChanged((user) => {
-    // console.log(user)
     if (user) {
       //You're logged in!
+      allPlayersRef = firebase.database().ref(`players`);
       playerId = window.localStorage.getItem("playerId");
-      if (playerId == null) {
-        swal({
-          title: "How can I say that?...",
-          icon: "error",
-          text: "You can't join this game. It is already started. Please, take a set and relax, the next set will start soon.",
-        });
-        location.href = `/views/waitingroom`;
-      }
 
       playerRef = firebase.database().ref(`players/${playerId}`);
-      allPlayersRef = firebase.database().ref(`players`);
-      allPlayersRef.get().then((snapshot) => {
-        players = snapshot.val() || {};
+      gamesetRef = firebase.database().ref(`gameset`);
+      playerRef.get().then((snapshot) => {
+        if (snapshot.exists()) {
+          playerRef.update({
+            place: GAMESET_GAMING,
+            online: true,
+            alive: true,
+          });
+
+          playerName = snapshot.val().name;
+          playerColor = snapshot.val().color;
+          if (snapshot.val().role === adminRole) {
+            allPlayersListener();
+            enableHostControls();
+            startGame();
+          } else {
+            enableDPAD();
+            enableKeyListeners();
+            window.localStorage.removeItem("playerId");
+            window.localStorage.removeItem("playerName");
+            //Remove me from Firebase when I diconnect
+            playerRef.onDisconnect().remove();
+            enableGameSetListener();
+          }
+        } else {
+          swal({
+            title: "How can I say that?...",
+            icon: "error",
+            text: "You can't join this game. It is already started. Please, take a set and relax, the next set will start soon.",
+          }).then(function () {
+            location.href = `/views/waitingroom`;
+          });
+        }
       });
-
-      playerRef.update({
-        online: true,
-      });
-
-      //Remove me from Firebase when I diconnect
-      playerRef.onDisconnect().remove();
-      window.localStorage.removeItem("playerId");
-
-      game();
+      setTimeout(() => {
+        game();
+      }, 3000);
     } else {
       //You're logged out.
     }

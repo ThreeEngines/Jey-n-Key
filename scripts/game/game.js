@@ -1,42 +1,50 @@
-const gameContainerComputedStyle = getComputedStyle(gameContainer);
-
-function game() {
+function enableKeyListeners() {
+  // DIRECTIONAL KEYS
   new KeyPressListener("ArrowUp", () => handleArrowPress(0, -1));
   new KeyPressListener("ArrowDown", () => handleArrowPress(0, 1));
   new KeyPressListener("ArrowLeft", () => handleArrowPress(-1, 0));
   new KeyPressListener("ArrowRight", () => handleArrowPress(1, 0));
-
   // ACTION KEYS
   new KeyPressListener("Enter", () => handleActionPress());
   // new KeyPressListener("Return", () => handleActionPress());
+}
 
-  const allPlayersRef = firebase.database().ref(`players`);
+function game() {
   const allHolesRef = firebase.database().ref(`holes`);
 
   allPlayersRef.on("value", (snapshot) => {
     //Fires whenever a change occurs
     players = snapshot.val() || {};
     Object.keys(players).forEach((key) => {
-      const characterState = players[key];
-      let el = playerElements[key];
-      // Now update the DOM
-      // el.querySelector(".character-name").innerText = characterState.name;
-      el.setAttribute("data-color", characterState.color);
-      el.setAttribute("data-direction", characterState.direction);
-      const left = tileSize * characterState.x + "px";
-      const top = tileSize * characterState.y - 4 + "px";
-      el.style.transform = `translate3d(${left}, ${top}, 0)`;
+      if (
+        players[key].role != adminRole &&
+        players[key].alive &&
+        playerElements[key] != null
+      ) {
+        const characterState = players[key];
+        let el = playerElements[key];
+        el.setAttribute("data-color", characterState.color);
+        el.setAttribute("data-direction", characterState.direction);
+        const left = tileSize * characterState.x + "px";
+        const top = tileSize * characterState.y - 4 + "px";
+        el.style.transform = `translate3d(${left}, ${top}, 0)`;
+      } else if (playerElements[key] != null && players[key].alive) {
+        gameScene.removeChild(playerElements[key]);
+        if (playerId == key) disableControls();
+        delete playerElements[key];
+      }
     });
   });
   allPlayersRef.on("child_added", (snapshot) => {
     //Fires whenever a new node is added the tree
     const addedPlayer = snapshot.val();
-    const characterElement = document.createElement("div");
-    characterElement.classList.add("character", "grid-cell");
-    if (addedPlayer.id === playerId) {
-      characterElement.classList.add("you");
-    }
-    characterElement.innerHTML = `
+    if (addedPlayer.role !== adminRole) {
+      const characterElement = document.createElement("div");
+      characterElement.classList.add("character", "grid-cell");
+      if (addedPlayer.id === playerId) {
+        characterElement.classList.add("you");
+      }
+      characterElement.innerHTML = `
         <div class="character-shadow grid-cell"></div>
         <div class="character-sprite grid-cell"></div>
         <div class="character-name-container">
@@ -44,23 +52,24 @@ function game() {
         </div>
         <div class="character-you-arrow"></div>
     `;
-    playerElements[addedPlayer.id] = characterElement;
+      playerElements[addedPlayer.id] = characterElement;
 
-    //Fill in some initial state
-    characterElement.querySelector(".character-name").innerText =
-      addedPlayer.name;
-    characterElement.setAttribute("data-color", addedPlayer.color);
-    characterElement.setAttribute("data-direction", addedPlayer.direction);
-    const left = 16 * addedPlayer.x + "px";
-    const top = 16 * addedPlayer.y - 4 + "px";
-    characterElement.style.transform = `translate3d(${left}, ${top}, 0)`;
-    gameContainer.appendChild(characterElement);
+      //Fill in some initial state
+      characterElement.querySelector(".character-name").innerText =
+        addedPlayer.name;
+      characterElement.setAttribute("data-color", addedPlayer.color);
+      characterElement.setAttribute("data-direction", addedPlayer.direction);
+      const left = tileSize * addedPlayer.x + "px";
+      const top = tileSize * addedPlayer.y - 4 + "px";
+      characterElement.style.transform = `translate3d(${left}, ${top}, 0)`;
+      gameScene.appendChild(characterElement);
+    }
   });
 
   //Remove character DOM element after they leave
   allPlayersRef.on("child_removed", (snapshot) => {
     const removedKey = snapshot.val().id;
-    gameContainer.removeChild(playerElements[removedKey]);
+    gameScene.removeChild(playerElements[removedKey]);
     delete playerElements[removedKey];
   });
 
@@ -90,12 +99,14 @@ function game() {
 
     // Keep a reference for removal later and add to DOM
     holeElements[key] = holeElement;
-    gameContainer.appendChild(holeElement);
+    gameScene.appendChild(holeElement);
   });
   allHolesRef.on("child_removed", (snapshot) => {
     const { x, y } = snapshot.val();
     const keyToRemove = getKeyString(x, y);
-    gameContainer.removeChild(holeElements[keyToRemove]);
+    gameScene.removeChild(holeElements[keyToRemove]);
     delete holeElements[keyToRemove];
   });
+
+  disableLoader();
 }
