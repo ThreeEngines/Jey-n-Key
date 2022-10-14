@@ -9,7 +9,7 @@ const sleepHoleSize = 50;
 // Timers => seconds
 const roundTime = 20;
 const swalRedirectTimer = 10;
-const garbageCollectorTime = 7;
+const garbageCollectorTime = 10;
 
 const mapData = {
   minX: 0,
@@ -61,7 +61,7 @@ const GAMESET_HIDE = "HIDE";
 const GAMESET_SEEK = "SEEK";
 const GAMESET_HUNT = "HUNT";
 
-const gamestates = [GAMESET_HIDE, GAMESET_SEEK, GAMESET_HUNT];
-const statesIndex = { HIDE: 0, SEEK: 1, HUNT: 2 };
+const gamestates = [GAMESET_LOADING, GAMESET_HIDE, GAMESET_SEEK, GAMESET_HUNT];
+const statesIndex = { LOADING: 0, HIDE: 1, SEEK: 2, HUNT: 3 };
 
 let host;

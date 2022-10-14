@@ -5,24 +5,32 @@ function startGame() {
 }
 
 function runtime() {
-  // < 3 (winner and host)
-  // if (countPlayers(players) < 3) {
-  //   setStatusToWaitingRoom();
-  //   const ip = window.localStorage.getItem("IP");
-  //   location.href = `/views/lobby?IP=${ip}`;
-  // }
+  // (winner)
+  if (countPlayers(players) <= 1) {
+    setStatusToWaitingRoom();
+    swal({
+      title: "Game end!",
+      icon: "success",
+      text: `Redirecting to lobby`,
+      timer: swalRedirectTimer * 1000,
+    }).then(function () {
+      const ip = window.localStorage.getItem("IP");
+      location.href = `/views/lobby?IP=${ip}`;
+    });
+  }
 
   console.log(`Executing set: ${gamesetStatus}`);
   switch (gamesetStatus) {
     case GAMESET_LOADING:
       // This first round will take some few more minutes
       // due to make sure everyone has being abble to join the party
-      bannerElement.innerText = "The game is about to start!";
+      bannerElement.innerText = "The round is about to start!";
       gamesetStatus = GAMESET_HIDE;
+      unearth();
       // startTimer();
       break;
     case GAMESET_HIDE:
-      unearth();
+      leaveHoles();
       seeker = getRandomPlayer(players);
       bannerElement.innerText = "Oh no! This mole is still sleeping!";
       setStatusToHide(seeker.id);
@@ -33,7 +41,7 @@ function runtime() {
     case GAMESET_SEEK:
       bannerElement.innerText = `?! You awake! Run and hide from the Hawk!`;
       setStatusToSeek(seeker.id);
-      awake();
+      seekHide(seeker.id);
       gamesetStatus = nextGameset(gamesetStatus);
       // startTimer();
       break;
@@ -42,8 +50,7 @@ function runtime() {
       setStatusToHunt(seeker.id);
       gamesetStatus = nextGameset(gamesetStatus);
       kickOut(seeker.id);
-      // startTimer();
-      break;
+      getUncoveredMoles();
     default:
       break;
   }

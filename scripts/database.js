@@ -10,12 +10,18 @@
   };
 
   // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+  try {
+    firebase.initializeApp(firebaseConfig);
+  } catch (error) {
+    console.log("É NESSA DESGRAÇA");
+    console.log(error);
+  }
 
   firebase
     .auth()
     .signInAnonymously()
     .catch((error) => {
+      console.log("AUTH É MEU LOGIN");
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(errorCode, errorMessage);

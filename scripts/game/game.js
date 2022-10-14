@@ -10,7 +10,6 @@ function enableKeyListeners() {
 }
 
 const allHolesRef = firebase.database().ref(`holes`);
-let hide = false;
 
 function game() {
   allPlayersRef.on("value", (snapshot) => {
@@ -73,19 +72,28 @@ function game() {
   //Remove character DOM element after they leave
   allPlayersRef.on("child_removed", (snapshot) => {
     const removedKey = snapshot.val().id;
-    if (playerId == removedKey) {
-      swal({
-        title: "Oooouch!",
-        icon: "error",
-        text: `You were caught by the Hawk, I'm sorry to say you that.\n
+    if (isDefined(gamesetStatus) && gamesetStatus != GAMESET_LOBBY) {
+      if (playerId == removedKey) {
+        document.querySelector(":root").style += `linear-gradient(
+            180deg,
+            #F5F5F5 -50%,
+            #888888 69.71%,
+            #101010 150%
+          );`;
+        swal({
+          title: "Oooouch!",
+          icon: "error",
+          text: `You were caught by the Hawk, I'm sorry to say you that.\n
         But you can keep whatching from the clouds your buddies hidding.`,
-        timer: roundTime * 1000,
-      });
+          timer: roundTime * 1000,
+        });
+        disableControls();
+      }
     }
-    if (removedKey == playerId) disableControls();
-    gameScene.removeChild(playerElements[removedKey]);
-    delete playerElements[removedKey];
-    disableControls();
+    if (playerElements[removedKey]) {
+      gameScene.removeChild(playerElements[removedKey]);
+      delete playerElements[removedKey];
+    }
   });
 
   /* HOLES */
@@ -136,11 +144,11 @@ function sleep(player) {
   seekerElement.style.display = "block";
 }
 
-function awake() {
+function seekHide(seekerId) {
   Object.keys(holes).forEach((holeKey) => {
     if (holes[holeKey].hidden) {
       holes[holeKey].hidden.forEach((id) => {
-        playerElements[id].classList.add("hide");
+        if (id != seekerId) playerElements[id].classList.add("hide");
       });
     }
   });
@@ -149,8 +157,6 @@ function awake() {
 }
 
 function kickOut(seekerId) {
-  playerElements[seekerId].classList.add("hide");
-
   firebase
     .database()
     .ref(`players/${GAMESET_GAMING}/${seekerId}`)
@@ -159,13 +165,19 @@ function kickOut(seekerId) {
       seeker = snapshot.val();
       let key = getKeyString(seeker.x, seeker.y);
       if (holes[key]) {
-        holes[key].hidden.forEach((id) => {
-          if (seekerId != id) {
-            playerElements[id].classList.remove("hide");
-            playerElements[id].classList.add("z-top");
-            kill(id);
-          }
-        });
+        firebase.database().ref(`holes/${key}`).update({ open: false });
+        playerElements[seekerId].classList.add("hide");
+        if (holes[key].hidden) {
+          holes[key].hidden.forEach((id) => {
+            if (seekerId != id) {
+              playerElements[id].classList.remove("hide");
+              playerElements[id].classList.add("z-top");
+              setInterval(() => {
+                kill(id);
+              }, (roundTime * 1000) / 2);
+            }
+          });
+        }
       } else {
         kill(seekerId);
       }
@@ -175,15 +187,25 @@ function kickOut(seekerId) {
     });
 }
 
-function kill(playerId) {
+function getUncoveredMoles() {
+  Object.keys(players).forEach((id) => {
+    if (!holes[getKeyString(players[id].x, players[id].y)]) {
+      kill(id);
+    }
+  });
+}
+
+function kill(id) {
   let playerKilledRef = firebase
     .database()
-    .ref(`players/${GAMESET_GAMING}/${playerId}`);
+    .ref(`players/${GAMESET_GAMING}/${id}`);
   playerKilledRef.update({
     alive: false,
   });
   databasePathExchange(playerKilledRef, GAMESET_WATCHING);
-  delete players[playerId];
+  gameScene.removeChild(playerElements[id]);
+  delete playerElements[id];
+  delete players[id];
 }
 
 function unearth() {
