@@ -48,7 +48,6 @@ function handleArrowPress(xChange = 0, yChange = 0) {
 }
 
 function handleActionPress() {
-  console.log("ACTION PRESS");
   entryHole(players[playerId]);
 }
 

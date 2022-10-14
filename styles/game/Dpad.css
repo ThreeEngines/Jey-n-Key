@@ -4,13 +4,26 @@
   box-sizing: border-box;
 }
 
+.dpad-up:active .dpad-up-triangle {
+  border-bottom: solid 20px #07c2cc;
+}
+.dpad-down:active .dpad-down-triangle {
+  border-bottom: solid 20px #07c2cc;
+}
+.dpad-left:active .dpad-left-triangle {
+  border-bottom: solid 20px #07c2cc;
+}
+.dpad-right:active .dpad-right-triangle {
+  border-bottom: solid 20px #07c2cc;
+}
+.dpad-center:active .dpad-center-circle {
+  background: #07c2cc;
+}
 
-.dpad-up:active .dpad-up-triangle { border-bottom:solid 20px #07c2cc; }
-.dpad-down:active .dpad-down-triangle { border-bottom:solid 20px #07c2cc; }
-.dpad-left:active .dpad-left-triangle { border-bottom:solid 20px #07c2cc; }
-.dpad-right:active .dpad-right-triangle { border-bottom:solid 20px #07c2cc; }
-.dpad-center:active .dpad-center-circle { background: #07c2cc; }
-
+.dpad-container {
+  margin-top: 2rem;
+  height: 0;
+}
 .dpad-div {
   padding: 0;
   margin: 0;
@@ -39,8 +52,6 @@
   background: #000;
   padding: 12px;
   border: 1px solid #222;
-/*   background: #51D6FF; */
-/*   background: #37FF8B; */
 }
 
 .dpad-center {
@@ -64,10 +75,7 @@
 
 .dpad-center-circle {
   position: static;
-/*   background: #222532; */
   background: #777;
-/*   background: #90E4FF; */
-/*   background: #7FFFB5; */
   border-radius: 100%;
   margin: auto;
   width: 75%;
@@ -82,9 +90,9 @@
   margin: auto;
   width: 65%;
   height: 65%;
-  border-left: solid 15px transparent; 
-  border-right: solid 15px transparent; 
-  border-bottom: solid 20px #777; 
+  border-left: solid 15px transparent;
+  border-right: solid 15px transparent;
+  border-bottom: solid 20px #777;
 }
 
 .dpad-right-triangle {
@@ -94,8 +102,8 @@
   margin: auto;
   width: 65%;
   height: 65%;
-  border-left: solid 15px transparent; 
-  border-right: solid 15px transparent; 
+  border-left: solid 15px transparent;
+  border-right: solid 15px transparent;
   border-bottom: solid 20px #777;
   transform: rotate(90deg);
 }
@@ -107,8 +115,8 @@
   margin: auto;
   width: 65%;
   height: 65%;
-  border-left: solid 15px transparent; 
-  border-right: solid 15px transparent; 
+  border-left: solid 15px transparent;
+  border-right: solid 15px transparent;
   border-bottom: solid 20px #777;
   transform: rotate(180deg);
 }
@@ -120,8 +128,8 @@
   margin: auto;
   width: 65%;
   height: 65%;
-  border-left: solid 15px transparent; 
-  border-right: solid 15px transparent; 
+  border-left: solid 15px transparent;
+  border-right: solid 15px transparent;
   border-bottom: solid 20px #777;
   transform: rotate(-90deg);
 }

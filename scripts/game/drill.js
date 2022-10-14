@@ -26,7 +26,6 @@ function drillHole() {
 function entryHole(player) {
   const key = getKeyString(player.x, player.y);
   if (holes[key] && holes[key].hidden.includes(player.id)) {
-    console.log("Update DB");
     triggerRef.update({
       triggered: true,
       by: player.id,

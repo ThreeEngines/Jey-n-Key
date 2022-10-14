@@ -108,15 +108,16 @@ function game() {
   allHolesRef.on("child_added", (snapshot) => {
     const hole = snapshot.val();
     const key = getKeyString(hole.x, hole.y);
-    holes[key] = true;
+    // holes[key];
 
     // Create the DOM Element
     const holeElement = document.createElement("div");
-    holeElement.classList.add("Coin", "grid-cell");
-    holeElement.innerHTML = `
-      <div class="coin-shadow grid-cell"></div>
-      <div class="coin-sprite grid-cell"></div>
-    `;
+    holeElement.classList.add("hole", "grid-cell");
+    console.log(hole.open);
+    let holeComponent = hole.open
+      ? `<div id="${key}" class="hole-sprite grid-cell"></div>`
+      : `<div id="${key}" class="hole-closed grid-cell"></div>`;
+    holeElement.innerHTML = holeComponent;
 
     // Position the Element
     const left = tileSize * hole.x + "px";
@@ -127,6 +128,31 @@ function game() {
     holeElements[key] = holeElement;
     gameScene.appendChild(holeElement);
   });
+
+  allHolesRef.on("child_changed", (snapshot) => {
+    const hole = snapshot.val();
+    const key = getKeyString(hole.x, hole.y);
+
+    const holeElement = document.getElementById(`${key}`);
+    holeElement.classList.add("hole", "grid-cell");
+    if (hole.open) {
+      holeElement.classList.remove("hole-closed");
+      holeElement.classList.add("hole-open");
+    } else {
+      holeElement.classList.remove("hole-open");
+      holeElement.classList.add("hole-closed");
+    }
+
+    // Position the Element
+    const left = tileSize * hole.x + "px";
+    const top = tileSize * hole.y - 4 + "px";
+    holeElement.style.transform = `translate3d(${left}, ${top}, 0)`;
+
+    // Keep a reference for removal later and add to DOM
+    holeElements[key] = holeElement;
+    gameScene.appendChild(holeElement);
+  });
+
   allHolesRef.on("child_removed", (snapshot) => {
     const { x, y } = snapshot.val();
     const keyToRemove = getKeyString(x, y);
@@ -182,9 +208,6 @@ function kickOut(seekerId) {
       } else {
         kill(seekerId);
       }
-    })
-    .then(() => {
-      if (host) console.log("HOST ALERT");
     });
 }
 

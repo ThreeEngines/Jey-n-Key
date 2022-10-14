@@ -23,7 +23,6 @@ function runtime() {
     });
   }
 
-  // console.log(`Executing set: ${gamesetStatus}`);
   switch (gamesetStatus) {
     case GAMESET_LOADING:
       // This first round will take some few more minutes

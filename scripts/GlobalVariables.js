@@ -1,7 +1,7 @@
 // S-px
 const tileSize = 16;
-const height = 208;
-const width = 240;
+const height = 320;
+const width = 270;
 const QRCodeHeight = 300;
 const QRCodeWidth = 300;
 const sleepHoleSize = 50;

@@ -74,7 +74,6 @@ const timerElement = document.getElementById("timer");
       }
     });
   } catch (error) {
-    console.log("Eu vou te achar, erro maldito.");
     console.log(error);
   }
 })();

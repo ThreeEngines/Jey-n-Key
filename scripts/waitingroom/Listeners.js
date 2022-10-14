@@ -30,15 +30,4 @@
       location.href = `/views/gameset?playerId=${playerId}`;
     }
   });
-
-  // REMOVE THE TEST BUTTON WHEN FINISH TESTING
-  const testButton = document.getElementById("player-test");
-  testButton.addEventListener("click", () => {
-    const childRef = firebase
-      .database()
-      .ref("/players/XBG4qqE8VXYRigD4ArvTymLONh42");
-    childRef.get().then((snapshot) => {
-      snapshot.val().online == false ? childRef.remove() : null;
-    });
-  });
 })();
