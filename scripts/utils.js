@@ -1,4 +1,8 @@
 //Misc Helpers
+function nextGameset(gameset) {
+  return gamestates[statesIndex[gameset] + 1] || gamestates[0];
+}
+
 var urlParam = function (name, w) {
   w = w || window;
   var rx = new RegExp("[&|?]" + name + "=([^&#]+)"),

@@ -9,23 +9,20 @@ function enableKeyListeners() {
   // new KeyPressListener("Return", () => handleActionPress());
 }
 
+const allHolesRef = firebase.database().ref(`holes`);
 let hide = false;
-function game() {
-  const allHolesRef = firebase.database().ref(`holes`);
 
+function game() {
   allPlayersRef.on("value", (snapshot) => {
     //Fires whenever a change occurs
     players = snapshot.val() || {};
     Object.keys(players).forEach((key) => {
       if (playerElements[key] != null) {
         const characterState = players[key];
-        let innerHtml = playerElements[key].innerHTML;
-        if (!characterState.online) {
-          playerElements[key].innerHTML = innerHtml.replace(
-            /character-name-container/,
-            "character-name-container disconnected"
-          );
+        if (!characterState.online || !characterState.alive) {
+          playerElements[key].classList.add("disconnected");
         } else {
+          let innerHtml = playerElements[key].innerHTML;
           playerElements[key].innerHTML = innerHtml.replace(
             / disconnected/,
             ""
@@ -76,10 +73,22 @@ function game() {
   //Remove character DOM element after they leave
   allPlayersRef.on("child_removed", (snapshot) => {
     const removedKey = snapshot.val().id;
+    if (playerId == removedKey) {
+      swal({
+        title: "Oooouch!",
+        icon: "error",
+        text: `You were caught by the Hawk, I'm sorry to say you that.\n
+        But you can keep whatching from the clouds your buddies hidding.`,
+        timer: roundTime * 1000,
+      });
+    }
     if (removedKey == playerId) disableControls();
     gameScene.removeChild(playerElements[removedKey]);
     delete playerElements[removedKey];
+    disableControls();
   });
+
+  /* HOLES */
 
   //New - not in the video!
   //This block will remove coins from local state when Firebase `coins` value updates
@@ -119,10 +128,74 @@ function game() {
   disableLoader();
 }
 
-function hidePlayers() {
-  hide = true;
+function sleep(player) {
+  bannerElement.classList.add("arcade-seeker-banner");
+  const left = tileSize * player.x - sleepHoleSize / 2 + 8 + "px";
+  const top = tileSize * player.y - 5 - sleepHoleSize / 2 + "px";
+  seekerElement.style.transform = `translate3d(${left}, ${top}, 0)`;
+  seekerElement.style.display = "block";
 }
 
-function showPlayers() {
-  hide = false;
+function awake() {
+  Object.keys(holes).forEach((holeKey) => {
+    if (holes[holeKey].hidden) {
+      holes[holeKey].hidden.forEach((id) => {
+        playerElements[id].classList.add("hide");
+      });
+    }
+  });
+  bannerElement.classList.remove("arcade-seeker-banner");
+  seekerElement.style.display = "none";
+}
+
+function kickOut(seekerId) {
+  playerElements[seekerId].classList.add("hide");
+
+  firebase
+    .database()
+    .ref(`players/${GAMESET_GAMING}/${seekerId}`)
+    .get()
+    .then((snapshot) => {
+      seeker = snapshot.val();
+      let key = getKeyString(seeker.x, seeker.y);
+      if (holes[key]) {
+        holes[key].hidden.forEach((id) => {
+          if (seekerId != id) {
+            playerElements[id].classList.remove("hide");
+            playerElements[id].classList.add("z-top");
+            kill(id);
+          }
+        });
+      } else {
+        kill(seekerId);
+      }
+    })
+    .then(() => {
+      if (host) console.log("HOST ALERT");
+    });
+}
+
+function kill(playerId) {
+  let playerKilledRef = firebase
+    .database()
+    .ref(`players/${GAMESET_GAMING}/${playerId}`);
+  playerKilledRef.update({
+    alive: false,
+  });
+  databasePathExchange(playerKilledRef, GAMESET_WATCHING);
+  delete players[playerId];
+}
+
+function unearth() {
+  if (holes) {
+    Object.keys(holes).forEach((key) => {
+      if (holes[key].hidden) {
+        holes[key].hidden.forEach((playerId) => {
+          if (playerElements[playerId])
+            playerElements[playerId].classList.remove("hide");
+          // else => He gone to the base
+        });
+      }
+    });
+  }
 }

@@ -17,6 +17,9 @@
       createHost();
 
       scheduleOfflinePlayerRemoval(allPlayersOnLobbyRef);
+      cleanDatabaseReferencePath(GAMESET_WATCHING);
+      cleanDatabaseReferencePath(GAMESET_GAMING);
+      cleanDatabaseHolesRef();
       removeOlderHosts();
       setStatusToWaitingRoom();
       refreshWaitingList();

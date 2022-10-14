@@ -6,6 +6,7 @@
       gamesetRef = firebase.database().ref(`gameset`);
       gamesetRef.get().then((snapshot) => {
         gamesetStatus = snapshot.val().status;
+        seeker = snapshot.val().seeker;
       });
 
       playerId = urlParam("playerId");
@@ -16,6 +17,7 @@
       playerRef.get().then((snapshot) => {
         if (snapshot.exists()) {
           pulse(playerRef);
+          host = false;
           playerName = snapshot.val().name;
           playerColor = snapshot.val().color;
           enableDPAD();
@@ -30,6 +32,7 @@
           playerRef.get().then((snapshot) => {
             if (snapshot.exists()) {
               pulse(playerRef);
+              host = true;
               scheduleOfflinePlayerRemoval(allPlayersRef);
               allPlayersListener();
               enableHostControls();
@@ -48,6 +51,10 @@
             }
           });
         }
+      });
+
+      allPlayersRef.get().then((snapshot) => {
+        players = snapshot.val() || {};
       });
 
       //Load timeout before start the game board

@@ -1,8 +1,7 @@
 let round = 0;
 function setStatusToWaitingRoom() {
-  gamesetStatus = GAMESET_LOBBY;
   gamesetRef.set({
-    status: gamesetStatus,
+    status: GAMESET_LOBBY,
     seeker: "null",
     timer: "",
     rounds: round,
@@ -10,32 +9,38 @@ function setStatusToWaitingRoom() {
 }
 
 function setStatusToLoading() {
-  gamesetStatus = GAMESET_LOADING;
   gamesetRef.set({
-    status: gamesetStatus,
+    status: GAMESET_LOADING,
     seeker: "null",
     timer: "",
     rounds: round,
   });
 }
 
-//nextSeeker = player.id
-function setStatusToHide(nextSeeker) {
-  gamesetStatus = GAMESET_HIDE;
+//nextSeekerId = player.id
+function setStatusToHide(nextSeekerId) {
   gamesetRef.set({
-    status: gamesetStatus,
-    seeker: nextSeeker,
+    status: GAMESET_HIDE,
+    seeker: nextSeekerId,
     timer: "",
     rounds: round++,
   });
 }
 
-//seeker = player.id
-function setStatusToSeek(seeker) {
-  gamesetStatus = GAMESET_SEEK;
+//seekerId = player.id
+function setStatusToSeek(seekerId) {
   gamesetRef.set({
-    status: gamesetStatus,
-    seeker: seeker,
+    status: GAMESET_SEEK,
+    seeker: seekerId,
+    timer: "",
+    rounds: round++,
+  });
+}
+
+function setStatusToHunt(seekerId) {
+  gamesetRef.set({
+    status: GAMESET_HUNT,
+    seeker: seekerId,
     timer: "",
     rounds: round++,
   });

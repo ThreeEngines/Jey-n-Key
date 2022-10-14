@@ -13,30 +13,32 @@ function enableGameSetListener() {
         bannerElement.innerText = "Waiting for everyone to join the game";
         break;
       case GAMESET_HIDE:
-        bannerElement.innerText = "Run and hide on a hole!";
-        setTimeout(() => {
-          bannerElement.innerText = "";
-        }, 5000);
+        unearth();
         if (gameset.seeker == playerId) {
-          const left =
-            tileSize * players[playerId].x - sleepHoleSize / 2 + 8 + "px";
-          const top =
-            tileSize * players[playerId].y - 5 - sleepHoleSize / 2 + "px";
-          seekerElement.style.transform = `translate3d(${left}, ${top}, 0)`;
-          seekerElement.style.display = "block";
+          bannerElement.innerText = "Seems that you're sleepy";
+          sleep(players[playerId]);
           disableControls();
-          hidePlayers();
         } else {
+          bannerElement.innerText = "Run and hide on a hole!";
           enableControls();
         }
         break;
       case GAMESET_SEEK:
+        awake();
+        bannerElement.innerText =
+          "Stay steel. Do not call the atention of the Hawk!";
         if (gameset.seeker == playerId) {
-          seekerElement.style.display = "none";
+          bannerElement.innerText = `You finally awake,
+          Hide before the Hawk catch you!`;
           enableControls();
         } else {
           disableControls();
         }
+        break;
+      case GAMESET_HUNT:
+        disableControls();
+        bannerElement.innerText = "HUNTING TIME!";
+        kickOut(gameset.seeker);
         break;
       default:
     }

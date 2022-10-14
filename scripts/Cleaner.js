@@ -49,3 +49,23 @@ function removeOlderHosts() {
     });
   });
 }
+
+function cleanDatabaseReferencePath(referencePath) {
+  let reference = firebase.database().ref(`players/${referencePath}`);
+  reference.get().then((snapshot) => {
+    players = snapshot.val() || {};
+    Object.keys(players).forEach((key) => {
+      firebase.database().ref(`players/${referencePath}/${key}`).remove();
+    });
+  });
+}
+
+function cleanDatabaseHolesRef() {
+  let reference = firebase.database().ref(`holes`);
+  reference.get().then((snapshot) => {
+    holes = snapshot.val() || {};
+    Object.keys(holes).forEach((key) => {
+      firebase.database().ref(`holes/${key}`).remove();
+    });
+  });
+}

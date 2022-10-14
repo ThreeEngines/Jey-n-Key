@@ -34,7 +34,7 @@ function refreshWaitingList() {
       player = snapshot.val() || {};
       updatePlayerRow(player);
     });
-  }, 500);
+  }, 600);
   disableLoader();
 }
 

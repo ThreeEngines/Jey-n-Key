@@ -4,10 +4,28 @@
     ".write": false,
     "players": {
       "$uid": {
-        ".write": "auth != null && auth.uid == $uid"
-      }
+        ".write": "auth != null"
+      },
+      "LOBBY" : {
+        "$uid": {
+          ".write": "auth != null"
+        }
+      },
+      "ALIVE" : {
+        "$uid": {
+          ".write": "auth != null"
+        }
+      },
+      "DEAD": {
+        "$uid": {
+          ".write": "auth != null"
+        }
+      } 
     },
     "holes": {
+      ".write": "auth != null"
+    },
+    "gameset": {
       ".write": "auth != null"
     }
   }

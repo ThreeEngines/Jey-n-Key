@@ -1,10 +1,9 @@
 function startGame() {
   bannerElement.innerText = "Waiting for everyone to join the game";
   // enableGameSetHostListener();
-  startTimer();
+  // startTimer();
 }
 
-let seeker;
 function runtime() {
   // < 3 (winner and host)
   // if (countPlayers(players) < 3) {
@@ -18,20 +17,32 @@ function runtime() {
     case GAMESET_LOADING:
       // This first round will take some few more minutes
       // due to make sure everyone has being abble to join the party
-      bannerElement.innerText = "";
-      gamesetStatus = GAMESET_SEEK;
-      startTimer();
+      bannerElement.innerText = "The game is about to start!";
+      gamesetStatus = GAMESET_HIDE;
+      // startTimer();
       break;
     case GAMESET_HIDE:
-      console.log(`Seek -> ${seeker.name}`);
-      setStatusToSeek(seeker.id);
-      startTimer();
+      unearth();
+      seeker = getRandomPlayer(players);
+      bannerElement.innerText = "Oh no! This mole is still sleeping!";
+      setStatusToHide(seeker.id);
+      sleep(seeker);
+      gamesetStatus = nextGameset(gamesetStatus);
+      // startTimer();
       break;
     case GAMESET_SEEK:
-      seeker = getRandomPlayer(players);
-      console.log(`Hide! Next Seeker -> ${seeker.name}`);
-      setStatusToHide(seeker.id);
-      startTimer();
+      bannerElement.innerText = `?! You awake! Run and hide from the Hawk!`;
+      setStatusToSeek(seeker.id);
+      awake();
+      gamesetStatus = nextGameset(gamesetStatus);
+      // startTimer();
+      break;
+    case GAMESET_HUNT:
+      bannerElement.innerText = "Take care! The Hawk is hunting!";
+      setStatusToHunt(seeker.id);
+      gamesetStatus = nextGameset(gamesetStatus);
+      kickOut(seeker.id);
+      // startTimer();
       break;
     default:
       break;

@@ -29,6 +29,7 @@ let playerId;
 let playerRef;
 let playerName;
 let playerColor;
+let seeker;
 
 let gamesetRef;
 
@@ -56,6 +57,11 @@ const GAMESET_WATCHING = "DEAD";
 const GAMESET_GAMING = "ALIVE";
 const GAMESET_LOBBY = "LOBBY";
 
-const GAMESET_DANGER = "DANGER";
-const GAMESET_SEEK = "SEEK";
 const GAMESET_HIDE = "HIDE";
+const GAMESET_SEEK = "SEEK";
+const GAMESET_HUNT = "HUNT";
+
+const gamestates = [GAMESET_HIDE, GAMESET_SEEK, GAMESET_HUNT];
+const statesIndex = { HIDE: 0, SEEK: 1, HUNT: 2 };
+
+let host;

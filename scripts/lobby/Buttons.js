@@ -6,7 +6,7 @@ startGameButton.addEventListener("click", () => {
       title: "That many people?",
       icon: "warning",
       buttons: ["I'll wait!", "Go for it!"],
-      text: "With few friends maybe not so much fun.",
+      text: "With few friends maybe not be that much fun.",
     }).then(function (isConfirm) {
       if (isConfirm) {
         setStatusToLoading();
