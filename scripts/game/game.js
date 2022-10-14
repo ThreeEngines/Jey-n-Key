@@ -113,7 +113,6 @@ function game() {
     // Create the DOM Element
     const holeElement = document.createElement("div");
     holeElement.classList.add("hole", "grid-cell");
-    console.log(hole.open);
     let holeComponent = hole.open
       ? `<div id="${key}" class="hole-sprite grid-cell"></div>`
       : `<div id="${key}" class="hole-closed grid-cell"></div>`;
