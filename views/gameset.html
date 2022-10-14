@@ -7,14 +7,24 @@
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <link rel="stylesheet" href="../styles/game/Character.css" type="text/css">
         <link rel="stylesheet" href="../styles/game/styles.css" type="text/css">
-        <link rel="stylesheet" href="../styles/lobby/letters.css" type="text/css">
+        <link rel="stylesheet" href="../styles/letters.css" type="text/css">
         <link rel="stylesheet" href="../styles/Root.css" type="text/css">
         <script src="../scripts/game/KeyPressListener.js"></script>
     </head>
     <body>
         <div id="loader" class="center"></div>
         <div class="screen">
-            <div id="hostcontrols-component"></div>
+            <div id="hostcontrols-component">
+                <div class="player-info">
+                    <div>
+                        <button id="to-lobby">Lobby</button>
+                    </div>
+                    <div>
+                        <button id="player-test">Interface</button>
+                    </div>
+                    <script src="../../scripts/game/host/Buttons.js"></script>
+                </div>
+            </div>
             <div class="game-container">
                 <a id="game-info" class="arcade-text arcade-banner index-content">
                     <a id="clock"></a>
@@ -32,6 +42,7 @@
             <script src="../scripts/components/LoadDPAD.js"></script>
             <script src="../scripts/Loader.js"></script>
             <script src="../scripts/database.js"></script>
+            <script src="../scripts/Cleaner.js"></script>
             <script src="../scripts/game/host/HostListener.js"></script>
             <script src="../scripts/game/Reconnect.js"></script>
             <script src="../scripts/game/GameSetListener.js"></script>

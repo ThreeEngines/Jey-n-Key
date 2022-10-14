@@ -61,6 +61,7 @@ function game() {
   //Remove character DOM element after they leave
   allPlayersRef.on("child_removed", (snapshot) => {
     const removedKey = snapshot.val().id;
+    if (removedKey == playerId) disableControls();
     gameScene.removeChild(playerElements[removedKey]);
     delete playerElements[removedKey];
   });

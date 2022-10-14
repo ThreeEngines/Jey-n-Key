@@ -9,7 +9,7 @@ const sleepHoleSize = 50;
 // Timers => seconds
 const roundTime = 10;
 const swalRedirectTimer = 10;
-const garbageCollectorTime = 4;
+const garbageCollectorTime = 7;
 
 const mapData = {
   minX: 0,

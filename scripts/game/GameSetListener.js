@@ -6,9 +6,6 @@ function enableGameSetListener() {
     gamesetStatus = gameset.status;
     switch (gamesetStatus) {
       case GAMESET_LOBBY:
-        window.localStorage.setItem("playerId", playerId);
-        window.localStorage.setItem("playerName", playerName);
-        window.localStorage.setItem("playerColor", playerColor);
         playerRef = databasePathExchange(playerRef, GAMESET_LOBBY);
         location.href = `/views/waitingroom?playerId=${playerId}`;
         break;

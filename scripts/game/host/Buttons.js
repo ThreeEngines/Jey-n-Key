@@ -8,8 +8,9 @@ lobbyButton.addEventListener("click", () => {
 });
 
 testButton.addEventListener("click", () => {
-  if (gamesetStatus == GAMESET_HIDE)
-    setStatusToSeek("XBG4qqE8VXYRigD4ArvTymLONh42");
-  else setStatusToHide("XBG4qqE8VXYRigD4ArvTymLONh42");
-  console.log(gamesetStatus);
+  console.log("oi?");
+  let ref = firebase
+    .database()
+    .ref(`players/${GAMESET_GAMING}/MIcNDGpcQFOiH3KuqfPGr30umIz21665705958178`);
+  databasePathExchange(ref, GAMESET_WATCHING);
 });

@@ -1,23 +1,22 @@
-function scheduleOfflinePlayerRemoval() {
-  allPlayersOnLobbyRef.get().then((snapshot) => {
+function scheduleOfflinePlayerRemoval(reference) {
+  reference.get().then((snapshot) => {
     let players = snapshot.val() || {};
     Object.keys(players).forEach((key) => {
       secondChange(players[key], key);
     });
   });
 
-  allPlayersOnLobbyRef.on("child_changed", (player) => {
+  reference.on("child_changed", (player) => {
     secondChange(player.val(), player.val().id);
   });
 }
+
 function secondChange(player, key) {
   if (player.online == false) {
-    setTimeout(function () {
-      const childRef = firebase
-        .database()
-        .ref(`players/${GAMESET_LOBBY}/${key}`);
+    const childRef = firebase.database().ref(`players/${GAMESET_LOBBY}/${key}`);
+    setTimeout(() => {
       childRef.get().then((snapshot) => {
-        !snapshot.val()?.online ? childRef.remove() : null;
+        if (!snapshot.val()?.online) childRef.remove();
       });
     }, garbageCollectorTime * 1000);
   }

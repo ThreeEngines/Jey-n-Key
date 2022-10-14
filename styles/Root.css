@@ -21,6 +21,8 @@
   --qr-code-square-color: #a15d22;
   --sleep-hole-color: rgba(0, 0, 0, 0.999);
   --sleep-hole-size: 50px;
+
+  --banner-translate-y: -7rem;
 }
 
 * {

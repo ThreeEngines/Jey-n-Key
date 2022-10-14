@@ -7,13 +7,16 @@
         .ref(`players/${GAMESET_LOBBY}`);
 
       playerId = urlParam("playerId");
-      if (!isDefined(playerId)) playerId = user.uid;
+      if (!isDefined(playerId)) {
+        playerId = user.uid;
+        setUrlParams(`playerId=${playerId}`);
+      }
 
       playerRef = firebase.database().ref(`players/${playerId}`);
       gamesetRef = firebase.database().ref(`gameset`);
       createHost();
 
-      scheduleOfflinePlayerRemoval();
+      scheduleOfflinePlayerRemoval(allPlayersOnLobbyRef);
       removeOlderHosts();
       setStatusToWaitingRoom();
       refreshWaitingList();

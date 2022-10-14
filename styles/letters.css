@@ -12,6 +12,7 @@
 }
 
 .arcade-banner {
+  transform: translateY(var(--banner-translate-y));
   position: absolute;
   text-align: -webkit-center;
   background: rgba(161, 93, 34, 0.85);;
