@@ -19,8 +19,7 @@ function runtime() {
       // This first round will take some few more minutes
       // due to make sure everyone has being abble to join the party
       bannerElement.innerText = "";
-      seeker = getRandomPlayer(players);
-      setStatusToSeek(seeker.id);
+      gamesetStatus = GAMESET_SEEK;
       startTimer();
       break;
     case GAMESET_HIDE:

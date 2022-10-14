@@ -9,6 +9,7 @@ function enableKeyListeners() {
   // new KeyPressListener("Return", () => handleActionPress());
 }
 
+let hide = false;
 function game() {
   const allHolesRef = firebase.database().ref(`holes`);
 
@@ -116,4 +117,12 @@ function game() {
   });
 
   disableLoader();
+}
+
+function hidePlayers() {
+  hide = true;
+}
+
+function showPlayers() {
+  hide = false;
 }

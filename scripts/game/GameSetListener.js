@@ -25,6 +25,7 @@ function enableGameSetListener() {
           seekerElement.style.transform = `translate3d(${left}, ${top}, 0)`;
           seekerElement.style.display = "block";
           disableControls();
+          hidePlayers();
         } else {
           enableControls();
         }
