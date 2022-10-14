@@ -18,6 +18,13 @@ function game() {
     Object.keys(players).forEach((key) => {
       if (playerElements[key] != null) {
         const characterState = players[key];
+        if (!characterState.online) {
+          let element = playerElements[key];
+          element = element.innerHTML.replace(
+            /character-name-container/,
+            "character-name-container disconnected"
+          );
+        }
         let el = playerElements[key];
         el.setAttribute("data-color", characterState.color);
         el.setAttribute("data-direction", characterState.direction);
@@ -30,32 +37,34 @@ function game() {
   allPlayersRef.on("child_added", (snapshot) => {
     //Fires whenever a new node is added the tree
     const addedPlayer = snapshot.val();
-    if (addedPlayer.role !== adminRole) {
-      const characterElement = document.createElement("div");
-      characterElement.classList.add("character", "grid-cell");
-      if (addedPlayer.id === playerId) {
-        characterElement.classList.add("you");
-      }
-      characterElement.innerHTML = `
+    const characterElement = document.createElement("div");
+    characterElement.setAttribute("id", `${addedPlayer.id}`);
+    characterElement.classList.add("character", "grid-cell");
+    let nameContainer = addedPlayer.online
+      ? "character-name-container"
+      : "character-name-container disconnected";
+    if (addedPlayer.id === playerId) {
+      characterElement.classList.add("you");
+    }
+    characterElement.innerHTML = `
         <div class="character-shadow grid-cell"></div>
         <div class="character-sprite grid-cell"></div>
-        <div class="character-name-container">
+        <div class="${nameContainer}">
             <span class="character-name"></span>
         </div>
         <div class="character-you-arrow"></div>
     `;
-      playerElements[addedPlayer.id] = characterElement;
+    playerElements[addedPlayer.id] = characterElement;
 
-      //Fill in some initial state
-      characterElement.querySelector(".character-name").innerText =
-        addedPlayer.name;
-      characterElement.setAttribute("data-color", addedPlayer.color);
-      characterElement.setAttribute("data-direction", addedPlayer.direction);
-      const left = tileSize * addedPlayer.x + "px";
-      const top = tileSize * addedPlayer.y - 4 + "px";
-      characterElement.style.transform = `translate3d(${left}, ${top}, 0)`;
-      gameScene.appendChild(characterElement);
-    }
+    //Fill in some initial state
+    characterElement.querySelector(".character-name").innerText =
+      addedPlayer.name;
+    characterElement.setAttribute("data-color", addedPlayer.color);
+    characterElement.setAttribute("data-direction", addedPlayer.direction);
+    const left = tileSize * addedPlayer.x + "px";
+    const top = tileSize * addedPlayer.y - 4 + "px";
+    characterElement.style.transform = `translate3d(${left}, ${top}, 0)`;
+    gameScene.appendChild(characterElement);
   });
 
   //Remove character DOM element after they leave

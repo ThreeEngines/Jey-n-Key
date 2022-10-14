@@ -19,6 +19,14 @@ function secondChange(player, key) {
         if (!snapshot.val()?.online) childRef.remove();
       });
     }, garbageCollectorTime * 1000);
+  } else if (!isDefined(player?.id)) {
+    const removedChild = document.getElementById("undefined");
+    if (isDefined(removedChild)) {
+      itemCount--;
+      removedChild.innerHTML = "";
+      removedChild.remove();
+      header.innerText = `Player name (${itemCount})`;
+    }
   }
 }
 

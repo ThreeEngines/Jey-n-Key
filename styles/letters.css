@@ -19,3 +19,14 @@
   z-index: 2;
   float: left;
 }
+
+.arcade-timer {
+  background: none;
+  transform: translateY(calc(var(--banner-translate-y) - 0.5));
+  font-size: 16;
+}
+
+
+.disconnected {
+  color: red
+}

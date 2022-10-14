@@ -7,7 +7,7 @@ const QRCodeWidth = 300;
 const sleepHoleSize = 50;
 
 // Timers => seconds
-const roundTime = 10;
+const roundTime = 20;
 const swalRedirectTimer = 10;
 const garbageCollectorTime = 7;
 

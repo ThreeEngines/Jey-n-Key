@@ -30,6 +30,7 @@
           playerRef.get().then((snapshot) => {
             if (snapshot.exists()) {
               pulse();
+              scheduleOfflinePlayerRemoval(allPlayersRef);
               allPlayersListener();
               enableHostControls();
               startGame();

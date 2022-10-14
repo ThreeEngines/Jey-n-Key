@@ -13,5 +13,8 @@ startGameButton.addEventListener("click", () => {
         location.href = `/views/gameset?playerId=${playerId}`;
       }
     });
+  } else {
+    setStatusToLoading();
+    location.href = `/views/gameset?playerId=${playerId}`;
   }
 });

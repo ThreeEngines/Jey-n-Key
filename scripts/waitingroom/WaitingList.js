@@ -15,7 +15,6 @@ function refreshWaitingList() {
     allPlayersOnLobbyRef.on("child_added", (snapshot) => {
       player = snapshot.val() || {};
       createPlayerRow(player);
-      disableLoader();
     });
 
     // Listener for any player left
@@ -27,7 +26,6 @@ function refreshWaitingList() {
         removedChild.innerHTML = "";
         removedChild.remove();
         header.innerText = `Player name (${itemCount})`;
-        disableLoader();
       }
     });
 
@@ -35,9 +33,9 @@ function refreshWaitingList() {
     allPlayersOnLobbyRef.on("child_changed", (snapshot) => {
       player = snapshot.val() || {};
       updatePlayerRow(player);
-      disableLoader();
     });
   }, 500);
+  disableLoader();
 }
 
 function createPlayerRow(player) {
