@@ -18,11 +18,16 @@ function game() {
     Object.keys(players).forEach((key) => {
       if (playerElements[key] != null) {
         const characterState = players[key];
+        let innerHtml = playerElements[key].innerHTML;
         if (!characterState.online) {
-          let element = playerElements[key];
-          element = element.innerHTML.replace(
+          playerElements[key].innerHTML = innerHtml.replace(
             /character-name-container/,
             "character-name-container disconnected"
+          );
+        } else {
+          playerElements[key].innerHTML = innerHtml.replace(
+            / disconnected/,
+            ""
           );
         }
         let el = playerElements[key];

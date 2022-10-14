@@ -73,7 +73,7 @@
     display: none;
     width: var(--sleep-hole-size);
     height: var(--sleep-hole-size);
-    box-shadow: 0 0 0 100vh var(--sleep-hole-color);
+    box-shadow: 0 0 0 150vh var(--sleep-hole-color);
     border-radius: var(--sleep-hole-size);
     z-index: 2;
 }

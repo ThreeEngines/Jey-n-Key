@@ -15,7 +15,7 @@
       // The player exists?
       playerRef.get().then((snapshot) => {
         if (snapshot.exists()) {
-          pulse();
+          pulse(playerRef);
           playerName = snapshot.val().name;
           playerColor = snapshot.val().color;
           enableDPAD();
@@ -29,7 +29,7 @@
           playerRef = firebase.database().ref(`players/${playerId}`);
           playerRef.get().then((snapshot) => {
             if (snapshot.exists()) {
-              pulse();
+              pulse(playerRef);
               scheduleOfflinePlayerRemoval(allPlayersRef);
               allPlayersListener();
               enableHostControls();
@@ -60,8 +60,8 @@
   });
 })();
 
-function pulse() {
-  playerRef.update({
+function pulse(ref) {
+  ref.update({
     online: true,
     alive: true,
   });
