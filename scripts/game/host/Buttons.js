@@ -14,7 +14,8 @@ drillButton.addEventListener("click", () => {
 });
 
 testButton.addEventListener("click", () => {
-  runtime();
+  // runtime();
+  finishTimer();
 
   /* SEEKER */
   // setStatusToHide(playerIdField.value);

@@ -41,13 +41,32 @@
                     <div id="game-seeker" class="seeker"></div>
                 </div>
             </div>
-            <div id="dpad-component"></div>
+            <div id="dpad-component">
+                <link rel="stylesheet" href="../styles/game/Dpad.css" type="text/css">
+                <div id="DPAD" class="dpad dpad-div">
+                    <div class="dpad-center dpad-div">
+                        <div id="dpad-ok" class="dpad-center-circle dpad-div"></div>
+                    </div>
+                    <div class="dpad-up direction dpad-div">
+                        <div id="dpad-up" class="dpad-up-triangle dpad-div"></div>
+                    </div>
+                    <div class="dpad-right direction dpad-div">
+                        <div id="dpad-right" class="dpad-right-triangle dpad-div"></div>
+                    </div>
+                    <div class="dpad-down direction dpad-div">
+                        <div id="dpad-down" class="dpad-down-triangle dpad-div"></div>
+                    </div>
+                    <div class="dpad-left direction dpad-div">
+                        <div id="dpad-left" class="dpad-left-triangle dpad-div"></div>
+                    </div>
+                </div>
+                <script src="../scripts/components/DPADListener.js"></script>
+            </div>
             <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
             <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
             <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
             <script src="../scripts/utils.js"></script>
             <script src="../scripts/GlobalVariables.js"></script>
-            <script src="../scripts/components/LoadDPAD.js"></script>
             <script src="../scripts/Loader.js"></script>
             <script src="../scripts/database.js"></script>
             <script src="../scripts/Cleaner.js"></script>
@@ -57,7 +76,6 @@
             <script src="../scripts/game/game.js"></script>
             <script src="../scripts/game/drill.js"></script>
             <script src="../scripts/game/host/GameSetControl.js"></script>
-            <script src="../scripts/components/LoadHostControls.js"></script>
             <script src="../scripts/game/host/GameSetScheduler.js"></script>
             <script src="../scripts/game/DatabaseHandler.js"></script>
         </div>

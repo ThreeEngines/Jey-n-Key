@@ -6,7 +6,7 @@ function enableKeyListeners() {
   new KeyPressListener("ArrowRight", () => handleArrowPress(1, 0));
   // ACTION KEYS
   new KeyPressListener("Enter", () => handleActionPress());
-  // new KeyPressListener("Return", () => handleActionPress());
+  new KeyPressListener("Return", () => handleActionPress());
 }
 
 const allHolesRef = firebase.database().ref(`holes`);
@@ -74,6 +74,7 @@ function game() {
     const removedKey = snapshot.val().id;
     if (isDefined(gamesetStatus) && gamesetStatus != GAMESET_LOBBY) {
       if (playerId == removedKey) {
+        dpadElement.classList.add("hide");
         document.querySelector(":root").style += `linear-gradient(
             180deg,
             #F5F5F5 -50%,
@@ -137,7 +138,7 @@ function game() {
 }
 
 function sleep(player) {
-  bannerElement.classList.add("arcade-seeker-banner");
+  darkMode();
   const left = tileSize * player.x - sleepHoleSize / 2 + 8 + "px";
   const top = tileSize * player.y - 5 - sleepHoleSize / 2 + "px";
   seekerElement.style.transform = `translate3d(${left}, ${top}, 0)`;
@@ -152,7 +153,7 @@ function seekHide(seekerId) {
       });
     }
   });
-  bannerElement.classList.remove("arcade-seeker-banner");
+  lightMode();
   seekerElement.style.display = "none";
 }
 
@@ -203,9 +204,11 @@ function kill(id) {
     alive: false,
   });
   databasePathExchange(playerKilledRef, GAMESET_WATCHING);
-  gameScene.removeChild(playerElements[id]);
-  delete playerElements[id];
-  delete players[id];
+  if (playerElements[id]) {
+    gameScene.removeChild(playerElements[id]);
+    delete playerElements[id];
+  }
+  if (players[id]) delete players[id];
 }
 
 function unearth() {
@@ -220,4 +223,14 @@ function unearth() {
       }
     });
   }
+}
+
+function darkMode() {
+  timerElement.classList.add("arcade-seeker-banner");
+  bannerElement.classList.add("arcade-seeker-banner");
+}
+
+function lightMode() {
+  bannerElement.classList.remove("arcade-seeker-banner");
+  timerElement.classList.remove("arcade-seeker-banner");
 }

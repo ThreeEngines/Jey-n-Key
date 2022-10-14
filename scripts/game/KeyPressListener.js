@@ -48,7 +48,8 @@ function handleArrowPress(xChange = 0, yChange = 0) {
 }
 
 function handleActionPress() {
-  deleteHole(players[playerId].x, players[playerId].y);
+  console.log("ACTION PRESS");
+  entryHole(players[playerId]);
 }
 
 function disableControls() {

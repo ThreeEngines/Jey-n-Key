@@ -1,9 +1,14 @@
+const hostElement = document.getElementById("hostcontrols-component");
+const dpadElement = document.getElementById("dpad-component");
+const timerElement = document.getElementById("timer");
+
 (function () {
   try {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         //You're logged in!
         allPlayersRef = firebase.database().ref(`players/${GAMESET_GAMING}`);
+        triggerRef = firebase.database().ref(`gameset/trigger`);
         gamesetRef = firebase.database().ref(`gameset`);
         gamesetRef.get().then((snapshot) => {
           gamesetStatus = snapshot.val().status;
@@ -18,10 +23,10 @@
         playerRef.get().then((snapshot) => {
           if (snapshot.exists()) {
             pulse(playerRef);
+            hostElement.classList.add("hide");
             host = false;
             playerName = snapshot.val().name;
             playerColor = snapshot.val().color;
-            enableDPAD();
             enableKeyListeners();
             playerRef.onDisconnect().update({
               online: false,
@@ -33,10 +38,12 @@
             playerRef.get().then((snapshot) => {
               if (snapshot.exists()) {
                 pulse(playerRef);
+                dpadElement.classList.add("hide");
                 host = true;
                 scheduleOfflinePlayerRemoval(allPlayersRef);
                 allPlayersListener();
-                enableHostControls();
+                triggerListener();
+                drillHoles();
                 startGame();
               } else {
                 // If it is not a player or the host, go back to the lobby.

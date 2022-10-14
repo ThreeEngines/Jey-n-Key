@@ -1,7 +1,11 @@
 function startGame() {
   bannerElement.innerText = "Waiting for everyone to join the game";
-  // enableGameSetHostListener();
-  // startTimer();
+  setTimeout(() => {
+    startTimer();
+  }, roundTime * 1000);
+  setTimeout(() => {
+    drillHoles(countPlayers(players));
+  }, (roundTime * 1000) / 2);
 }
 
 function runtime() {
@@ -19,15 +23,16 @@ function runtime() {
     });
   }
 
-  console.log(`Executing set: ${gamesetStatus}`);
+  // console.log(`Executing set: ${gamesetStatus}`);
   switch (gamesetStatus) {
     case GAMESET_LOADING:
       // This first round will take some few more minutes
       // due to make sure everyone has being abble to join the party
       bannerElement.innerText = "The round is about to start!";
+      setStatusToLoading();
       gamesetStatus = GAMESET_HIDE;
       unearth();
-      // startTimer();
+      startTimer();
       break;
     case GAMESET_HIDE:
       leaveHoles();
@@ -36,14 +41,14 @@ function runtime() {
       setStatusToHide(seeker.id);
       sleep(seeker);
       gamesetStatus = nextGameset(gamesetStatus);
-      // startTimer();
+      startTimer();
       break;
     case GAMESET_SEEK:
       bannerElement.innerText = `?! You awake! Run and hide from the Hawk!`;
       setStatusToSeek(seeker.id);
       seekHide(seeker.id);
       gamesetStatus = nextGameset(gamesetStatus);
-      // startTimer();
+      startTimer();
       break;
     case GAMESET_HUNT:
       bannerElement.innerText = "Take care! The Hawk is hunting!";
@@ -51,29 +56,34 @@ function runtime() {
       gamesetStatus = nextGameset(gamesetStatus);
       kickOut(seeker.id);
       getUncoveredMoles();
+      startTimer();
     default:
       break;
   }
 }
-
+var interval;
 function startTimer() {
-  var timer = roundTime,
-    minutes,
-    seconds;
-  var interval = setInterval(function () {
-    minutes = parseInt(timer / 60, 10);
-    seconds = parseInt(timer % 60, 10);
-
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-
-    document.getElementById(
-      "timer"
-    ).textContent = `The next stage starts in: ${minutes}:${seconds}`;
+  var timer = roundTime;
+  interval = setInterval(function () {
+    timerElement.textContent = `The next stage starts in ${formatTime(timer)}`;
 
     if (--timer < 0) {
-      clearInterval(interval);
-      runtime();
+      finishTimer();
     }
   }, 1000);
+}
+
+function formatTime(timer) {
+  minutes = parseInt(timer / 60, 10);
+  seconds = parseInt(timer % 60, 10);
+
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+  return `${minutes}:${seconds}`;
+}
+
+function finishTimer() {
+  if (interval) clearInterval(interval);
+  timerElement.textContent = `The next stage starts in ${formatTime(0)}`;
+  runtime();
 }

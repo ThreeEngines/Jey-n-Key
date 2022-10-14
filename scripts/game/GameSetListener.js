@@ -6,7 +6,7 @@ function enableGameSetListener() {
     gamesetStatus = gameset.status;
     switch (gamesetStatus) {
       case GAMESET_LOBBY:
-        if (playerRef) {
+        if (players[playerId]) {
           playerRef = databasePathExchange(playerRef, GAMESET_LOBBY);
           swal({
             title: "CONGRATULATION!",
@@ -19,11 +19,13 @@ function enableGameSetListener() {
             location.href = `/views/waitingroom?playerId=${playerId}`;
           });
         } else {
+          playerRef = databasePathExchange(playerRef, GAMESET_LOBBY);
           location.href = `/views/waitingroom?playerId=${playerId}`;
         }
         break;
       case GAMESET_LOADING:
         bannerElement.innerText = "The round is about to start!";
+        enableControls();
         unearth();
         break;
       case GAMESET_HIDE:

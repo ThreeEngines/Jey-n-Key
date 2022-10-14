@@ -1,6 +1,7 @@
 //Misc Helpers
 function nextGameset(gameset) {
-  return gamestates[statesIndex[gameset] + 1] || gamestates[0];
+  let index = gamestates.indexOf(gameset);
+  return gamestates[index + 1] || gamestates[0];
 }
 
 var urlParam = function (name, w) {

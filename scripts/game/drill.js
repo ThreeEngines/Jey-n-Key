@@ -1,3 +1,10 @@
+function drillHoles(playerCount) {
+  let drill = 1 + Math.round((2 * playerCount) / 3);
+  for (; drill > 0; drill--) {
+    drillHole();
+  }
+}
+
 function drillHole() {
   const { x, y } = getRandomSpot();
   const key = getKeyString(x, y);
@@ -14,6 +21,17 @@ function drillHole() {
       });
     }
   });
+}
+
+function entryHole(player) {
+  const key = getKeyString(player.x, player.y);
+  if (holes[key] && holes[key].hidden.includes(player.id)) {
+    console.log("Update DB");
+    triggerRef.update({
+      triggered: true,
+      by: player.id,
+    });
+  }
 }
 
 function leaveHoles() {

@@ -25,20 +25,20 @@ const prefixName = randomFromArray(["COOL", "SUPER", "SOFT", "BUFF", "DOPE"]);
 
 const adminRole = "HOST";
 let gamesetStatus;
-let playerId;
-let playerRef;
-let playerName;
-let playerColor;
-let seeker;
-
-let gamesetRef;
-
 let players = {};
+let playerColor;
+let playerName;
+let playerRef;
+let playerId;
+let seeker;
+let trigger;
 
 let allPlayersOnLobbyRef;
 let allPlayersAliveRef;
 let allPlayersDeadRef;
 let allPlayersRef;
+let gamesetRef;
+let triggerRef;
 
 let playerElements = {};
 let holeElements = {};
@@ -62,6 +62,5 @@ const GAMESET_SEEK = "SEEK";
 const GAMESET_HUNT = "HUNT";
 
 const gamestates = [GAMESET_LOADING, GAMESET_HIDE, GAMESET_SEEK, GAMESET_HUNT];
-const statesIndex = { LOADING: 0, HIDE: 1, SEEK: 2, HUNT: 3 };
 
 let host;
