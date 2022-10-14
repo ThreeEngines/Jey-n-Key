@@ -7,38 +7,75 @@
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <link rel="stylesheet" href="../styles/game/Character.css" type="text/css">
         <link rel="stylesheet" href="../styles/game/styles.css" type="text/css">
-        <link rel="stylesheet" href="../styles/lobby/letters.css" type="text/css">
+        <link rel="stylesheet" href="../styles/letters.css" type="text/css">
         <link rel="stylesheet" href="../styles/Root.css" type="text/css">
         <script src="../scripts/game/KeyPressListener.js"></script>
     </head>
     <body>
         <div id="loader" class="center"></div>
         <div class="screen">
-            <div id="hostcontrols-component"></div>
+            <div id="hostcontrols-component">
+                <div class="player-info">
+                    <div>
+                        <button id="to-lobby">Lobby</button>
+                    </div>
+                    <div>
+                        <button id="player-test">Interface</button>
+                    </div>
+                    <div>
+                        <button id="drill">Drill</button>
+                    </div>
+                    <div>
+                        <label for="player-id">Player ID</label>
+                        <input id="player-id" type="text">
+                    </div>
+                    <script src="../../scripts/game/host/Buttons.js"></script>
+                </div>
+            </div>
             <div class="game-container">
                 <a id="game-info" class="arcade-text arcade-banner index-content">
                     <a id="clock"></a>
+                    <span id="timer" class="arcade-text arcade-banner index-content arcade-timer"></span>
                 </a>
                 <div id="game-scene" class="scene">
                     <div id="game-seeker" class="seeker"></div>
                 </div>
             </div>
-            <div id="dpad-component"></div>
+            <div id="dpad-component">
+                <link rel="stylesheet" href="../styles/game/Dpad.css" type="text/css">
+                <div id="DPAD" class="dpad dpad-div">
+                    <div class="dpad-center dpad-div">
+                        <div id="dpad-ok" class="dpad-center-circle dpad-div"></div>
+                    </div>
+                    <div class="dpad-up direction dpad-div">
+                        <div id="dpad-up" class="dpad-up-triangle dpad-div"></div>
+                    </div>
+                    <div class="dpad-right direction dpad-div">
+                        <div id="dpad-right" class="dpad-right-triangle dpad-div"></div>
+                    </div>
+                    <div class="dpad-down direction dpad-div">
+                        <div id="dpad-down" class="dpad-down-triangle dpad-div"></div>
+                    </div>
+                    <div class="dpad-left direction dpad-div">
+                        <div id="dpad-left" class="dpad-left-triangle dpad-div"></div>
+                    </div>
+                </div>
+                <script src="../scripts/components/DPADListener.js"></script>
+            </div>
             <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
             <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
             <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
             <script src="../scripts/utils.js"></script>
             <script src="../scripts/GlobalVariables.js"></script>
-            <script src="../scripts/components/LoadDPAD.js"></script>
             <script src="../scripts/Loader.js"></script>
             <script src="../scripts/database.js"></script>
+            <script src="../scripts/Cleaner.js"></script>
             <script src="../scripts/game/host/HostListener.js"></script>
             <script src="../scripts/game/Reconnect.js"></script>
             <script src="../scripts/game/GameSetListener.js"></script>
             <script src="../scripts/game/game.js"></script>
             <script src="../scripts/game/drill.js"></script>
             <script src="../scripts/game/host/GameSetControl.js"></script>
-            <script src="../scripts/components/LoadHostControls.js"></script>
             <script src="../scripts/game/host/GameSetScheduler.js"></script>
             <script src="../scripts/game/DatabaseHandler.js"></script>
         </div>

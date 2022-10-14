@@ -28,26 +28,28 @@ class KeyPressListener {
 
 function handleArrowPress(xChange = 0, yChange = 0) {
   if (isEnabled) {
-    const newX = players[playerId].x + xChange;
-    const newY = players[playerId].y + yChange;
+    const x = players[playerId].x;
+    const y = players[playerId].y;
+    const newX = x + xChange;
+    const newY = y + yChange;
     if (!isSolid(newX, newY)) {
       //move to the next space
       players[playerId].x = newX;
       players[playerId].y = newY;
       if (xChange === 1) {
         players[playerId].direction = "right";
-      }
-      if (xChange === -1) {
+      } else if (xChange === -1) {
         players[playerId].direction = "left";
       }
       playerRef.set(players[playerId]);
-      attemptHole(newX, newY);
+      attemptHole(x, y, newX, newY, playerId);
     }
   }
 }
 
 function handleActionPress() {
-  deleteHole(players[playerId].x, players[playerId].y);
+  console.log("ACTION PRESS");
+  entryHole(players[playerId]);
 }
 
 function disableControls() {

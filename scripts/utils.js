@@ -1,4 +1,9 @@
 //Misc Helpers
+function nextGameset(gameset) {
+  let index = gamestates.indexOf(gameset);
+  return gamestates[index + 1] || gamestates[0];
+}
+
 var urlParam = function (name, w) {
   w = w || window;
   var rx = new RegExp("[&|?]" + name + "=([^&#]+)"),
@@ -6,13 +11,18 @@ var urlParam = function (name, w) {
   return !val ? "" : val[1];
 };
 
-function setUrlParams(params) {
+function setUrlParams(appendParams) {
+  var params = isDefined(window.location.search)
+    ? `${window.location.search}&`
+    : "?";
   var newurl =
     window.location.protocol +
     "//" +
     window.location.host +
     window.location.pathname +
-    `${params}`;
+    params +
+    `${appendParams}`;
+
   window.history.pushState({ path: newurl }, "", newurl);
 }
 

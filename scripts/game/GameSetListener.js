@@ -6,39 +6,56 @@ function enableGameSetListener() {
     gamesetStatus = gameset.status;
     switch (gamesetStatus) {
       case GAMESET_LOBBY:
-        window.localStorage.setItem("playerId", playerId);
-        window.localStorage.setItem("playerName", playerName);
-        window.localStorage.setItem("playerColor", playerColor);
-        playerRef = databasePathExchange(playerRef, GAMESET_LOBBY);
-        location.href = `/views/waitingroom?playerId=${playerId}`;
+        if (players[playerId]) {
+          playerRef = databasePathExchange(playerRef, GAMESET_LOBBY);
+          swal({
+            title: "CONGRATULATION!",
+            icon: "success",
+            text: `YOU SURVIVED THIS CRUEL HAWK FOR ${gameset.rounds} ROUNDS.\n
+          But at which coast?\n\n
+          Relax, you are going back to the waiting room again.`,
+            timer: swalRedirectTimer * 1000,
+          }).then(function () {
+            location.href = `/views/waitingroom?playerId=${playerId}`;
+          });
+        } else {
+          playerRef = databasePathExchange(playerRef, GAMESET_LOBBY);
+          location.href = `/views/waitingroom?playerId=${playerId}`;
+        }
         break;
       case GAMESET_LOADING:
-        bannerElement.innerText = "Waiting for everyone to join the game";
+        bannerElement.innerText = "The round is about to start!";
+        enableControls();
+        unearth();
         break;
       case GAMESET_HIDE:
-        bannerElement.innerText = "Run and hide on a hole!";
-        setTimeout(() => {
-          bannerElement.innerText = "";
-        }, 5000);
+        leaveHoles();
         if (gameset.seeker == playerId) {
-          const left =
-            tileSize * players[playerId].x - sleepHoleSize / 2 + 8 + "px";
-          const top =
-            tileSize * players[playerId].y - 5 - sleepHoleSize / 2 + "px";
-          seekerElement.style.transform = `translate3d(${left}, ${top}, 0)`;
-          seekerElement.style.display = "block";
+          bannerElement.innerText = "Seems that you're sleepy";
+          sleep(players[playerId]);
           disableControls();
         } else {
+          bannerElement.innerText = "Run and hide on a hole!";
           enableControls();
         }
         break;
       case GAMESET_SEEK:
+        seekHide(gameset.seeker);
+        bannerElement.innerText =
+          "Stay steel. Do not call the atention of the Hawk!";
         if (gameset.seeker == playerId) {
-          seekerElement.style.display = "none";
+          bannerElement.innerText = `You finally awake,
+          Hide before the Hawk catch you!`;
           enableControls();
         } else {
           disableControls();
         }
+        break;
+      case GAMESET_HUNT:
+        disableControls();
+        bannerElement.innerText = "HUNTING TIME!";
+        getUncoveredMoles(gameset.seeker);
+        kickOut(gameset.seeker);
         break;
       default:
     }

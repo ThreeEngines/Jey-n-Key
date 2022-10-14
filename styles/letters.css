@@ -2,7 +2,7 @@
 
 .arcade-text {
   font-family: 'ArcadeClassic', sans-serif;
-  font-size: 32;
+  font-size: 30;
   position: relative;
   align-items: center
 }
@@ -11,10 +11,26 @@
   align-items: center
 }
 
+.arcade-seeker-banner {
+  color: white;
+}
+
 .arcade-banner {
+  transform: translateY(var(--banner-translate-y));
   position: absolute;
   text-align: -webkit-center;
   background: rgba(161, 93, 34, 0.85);;
-  z-index: 2;
+  z-index: 3;
   float: left;
+}
+
+.arcade-timer {
+  background: none;
+  transform: translateY(var(--height));
+  font-size: 16;
+}
+
+
+.disconnected {
+  color: red
 }

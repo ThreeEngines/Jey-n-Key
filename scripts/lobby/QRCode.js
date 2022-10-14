@@ -1,7 +1,8 @@
 let qr_code_element = document.querySelector(".qr-code");
 
 function generateQRCode() {
-  window.localStorage.setItem("IP", urlParam("IP"));
+  if (window.localStorage.getItem("IP") != urlParam("IP"))
+    window.localStorage.setItem("IP", urlParam("IP"));
   let user_input = {
     value: `http://${urlParam("IP")}:8080/views/waitingroom`,
   };

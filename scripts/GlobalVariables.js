@@ -7,9 +7,9 @@ const QRCodeWidth = 300;
 const sleepHoleSize = 50;
 
 // Timers => seconds
-const roundTime = 10;
+const roundTime = 20;
 const swalRedirectTimer = 10;
-const garbageCollectorTime = 4;
+const garbageCollectorTime = 10;
 
 const mapData = {
   minX: 0,
@@ -25,19 +25,20 @@ const prefixName = randomFromArray(["COOL", "SUPER", "SOFT", "BUFF", "DOPE"]);
 
 const adminRole = "HOST";
 let gamesetStatus;
-let playerId;
-let playerRef;
-let playerName;
-let playerColor;
-
-let gamesetRef;
-
 let players = {};
+let playerColor;
+let playerName;
+let playerRef;
+let playerId;
+let seeker;
+let trigger;
 
 let allPlayersOnLobbyRef;
 let allPlayersAliveRef;
 let allPlayersDeadRef;
 let allPlayersRef;
+let gamesetRef;
+let triggerRef;
 
 let playerElements = {};
 let holeElements = {};
@@ -56,6 +57,10 @@ const GAMESET_WATCHING = "DEAD";
 const GAMESET_GAMING = "ALIVE";
 const GAMESET_LOBBY = "LOBBY";
 
-const GAMESET_DANGER = "DANGER";
-const GAMESET_SEEK = "SEEK";
 const GAMESET_HIDE = "HIDE";
+const GAMESET_SEEK = "SEEK";
+const GAMESET_HUNT = "HUNT";
+
+const gamestates = [GAMESET_LOADING, GAMESET_HIDE, GAMESET_SEEK, GAMESET_HUNT];
+
+let host;

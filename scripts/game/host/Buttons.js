@@ -1,5 +1,7 @@
 const lobbyButton = document.getElementById("to-lobby");
 const testButton = document.getElementById("player-test");
+const playerIdField = document.getElementById("player-id");
+const drillButton = document.getElementById("drill");
 
 lobbyButton.addEventListener("click", () => {
   setStatusToWaitingRoom();
@@ -7,9 +9,20 @@ lobbyButton.addEventListener("click", () => {
   location.href = `/views/lobby?IP=${ip}&playerId=${playerId}`;
 });
 
+drillButton.addEventListener("click", () => {
+  drillHole();
+});
+
 testButton.addEventListener("click", () => {
-  if (gamesetStatus == GAMESET_HIDE)
-    setStatusToSeek("XBG4qqE8VXYRigD4ArvTymLONh42");
-  else setStatusToHide("XBG4qqE8VXYRigD4ArvTymLONh42");
-  console.log(gamesetStatus);
+  // runtime();
+  finishTimer();
+
+  /* SEEKER */
+  // setStatusToHide(playerIdField.value);
+
+  /*- Kill */
+  // let ref = firebase
+  //   .database()
+  //   .ref(`players/${GAMESET_GAMING}/${playerIdField.value}`);
+  // databasePathExchange(ref, GAMESET_WATCHING);
 });
