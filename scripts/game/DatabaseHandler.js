@@ -1,11 +1,13 @@
-function databasePathExchange(objectRef, to) {
-  var toRef = firebase.database().ref(`players/${to}/${playerId}`);
+function databasePathExchange(objectRef, id, to) {
+  var toRef = firebase.database().ref(`players/${to}/${id}`);
   objectRef.get().then((snapshot) => {
-    toRef.set(snapshot.val());
+    player = snapshot.val();
+    player.place = to;
+    toRef.set(player);
     objectRef.remove();
   });
-  objectRef.onDisconnect().cancel();
 
+  objectRef.onDisconnect().cancel();
   toRef.onDisconnect().update({
     online: false,
   });

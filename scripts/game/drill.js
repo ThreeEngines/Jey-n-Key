@@ -1,5 +1,5 @@
 function drillHoles(playerCount) {
-  let drill = 1 + Math.round((2 * playerCount) / 3);
+  let drill = 1 + playerCount * Math.round((2 * playerCount) / 3);
   for (; drill > 0; drill--) {
     drillHole();
   }
@@ -41,17 +41,20 @@ function leaveHoles() {
   }
 }
 
-function attemptHole(x, y, newX, newY, playerId) {
+function attemptHole(x, y, newX, newY, id) {
   const leftKey = getKeyString(x, y);
   const joinKey = getKeyString(newX, newY);
   if (holes[leftKey]) {
     const holeRef = firebase.database().ref(`holes/${leftKey}`);
     holeRef.get().then((snapshot) => {
       let hole = snapshot.val();
-      if (hole?.hidden?.includes(playerId)) {
-        hole.hidden.splice(hole.hidden.indexOf(playerId), 1);
+      if (hole?.hidden?.includes(id)) {
+        hole.hidden.splice(hole.hidden.indexOf(id), 1);
         holeRef.update({
           hidden: hole.hidden,
+        });
+        firebase.database().ref(`players/${GAMESET_GAMING}/${id}`).update({
+          hole: "",
         });
       }
     });
@@ -59,14 +62,18 @@ function attemptHole(x, y, newX, newY, playerId) {
     const holeRef = firebase.database().ref(`holes/${joinKey}`);
     holeRef.get().then((snapshot) => {
       let hole = snapshot.val();
-      if (hole.hidden) {
-        hole.hidden[hole.hidden?.length || 0] = playerId;
+      if (hole.hidden && !hole.hidden.includes(id)) {
+        hole.hidden[hole.hidden?.length || 0] = id;
       } else {
         hole.hidden = [];
-        hole.hidden[0] = playerId;
+        hole.hidden[0] = id;
       }
       holeRef.update({
         hidden: hole.hidden,
+      });
+
+      firebase.database().ref(`players/${GAMESET_GAMING}/${id}`).update({
+        hole: joinKey,
       });
     });
   }

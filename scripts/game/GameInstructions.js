@@ -18,15 +18,23 @@ function game() {
     Object.keys(players).forEach((key) => {
       if (playerElements[key] != null) {
         const characterState = players[key];
+        let innerHtml = playerElements[key].innerHTML;
         if (!characterState.online || !characterState.alive) {
-          playerElements[key].classList.add("disconnected");
-        } else {
-          let innerHtml = playerElements[key].innerHTML;
-          playerElements[key].innerHTML = innerHtml.replace(
-            / disconnected/,
-            ""
+          innerHtml = innerHtml.replace(
+            /character-name-container/,
+            "character-name-container disconnected"
           );
+          appendElement(
+            key,
+            "hawk",
+            ["hawk-sprite", "grid-cell", "character"],
+            -tileSize
+          );
+        } else {
+          innerHtml = innerHtml.replace(/ disconnected/, "");
+          removeElement(`${key}-hawk`);
         }
+        playerElements[key].innerHTML = innerHtml;
         let el = playerElements[key];
         el.setAttribute("data-color", characterState.color);
         el.setAttribute("data-direction", characterState.direction);
@@ -72,8 +80,10 @@ function game() {
   //Remove character DOM element after they leave
   allPlayersRef.on("child_removed", (snapshot) => {
     const removedKey = snapshot.val().id;
+    removeElement(`${removedKey}-hawk`);
     if (isDefined(gamesetStatus) && gamesetStatus != GAMESET_LOBBY) {
       if (playerId == removedKey) {
+        removeElement(`${removedKey}-arrow`);
         dpadElement.classList.add("hide");
         document.querySelector(":root").style += `linear-gradient(
             180deg,
@@ -170,11 +180,11 @@ function sleep(player) {
   seekerElement.style.display = "block";
 }
 
-function seekHide(seekerId) {
+function hideFromSeeker(seekerId) {
   Object.keys(holes).forEach((holeKey) => {
     if (holes[holeKey].hidden) {
       holes[holeKey].hidden.forEach((id) => {
-        if (id != seekerId) playerElements[id].classList.add("hide");
+        if (id != seekerId) hide(id);
       });
     }
   });
@@ -190,22 +200,24 @@ function kickOut(seekerId) {
     .then((snapshot) => {
       seeker = snapshot.val();
       let key = getKeyString(seeker.x, seeker.y);
+      // It is a valid hole
+      // Seeker -> hide
+      // Kill forall on the hole
       if (holes[key]) {
-        firebase.database().ref(`holes/${key}`).update({ open: false });
-        playerElements[seekerId].classList.add("hide");
+        if (host)
+          firebase.database().ref(`holes/${key}`).update({ open: false });
+        hide(seekerId);
         if (holes[key].hidden) {
           holes[key].hidden.forEach((id) => {
             if (seekerId != id) {
-              playerElements[id].classList.remove("hide");
-              playerElements[id].classList.add("z-top");
-              setInterval(() => {
-                kill(id);
-              }, (roundTime * 1000) / 2);
+              show(id);
+              if (host) kill(id);
             }
           });
         }
       } else {
-        kill(seekerId);
+        // Seeker has not able to hide
+        if (host) kill(seekerId);
       }
     });
 }
@@ -213,24 +225,42 @@ function kickOut(seekerId) {
 function getUncoveredMoles() {
   Object.keys(players).forEach((id) => {
     if (!holes[getKeyString(players[id].x, players[id].y)]) {
-      kill(id);
+      if (players[id].alive) kill(id);
     }
   });
 }
 
 function kill(id) {
-  let playerKilledRef = firebase
+  let killedPlayerRef = firebase
     .database()
     .ref(`players/${GAMESET_GAMING}/${id}`);
-  playerKilledRef.update({
-    alive: false,
-  });
-  databasePathExchange(playerKilledRef, GAMESET_WATCHING);
-  if (playerElements[id]) {
-    gameScene.removeChild(playerElements[id]);
-    delete playerElements[id];
-  }
+
+  if (players[id] && players[id].alive)
+    killedPlayerRef.update({
+      alive: false,
+    });
+
+  deadBodiesOnTheField[deadBodiesOnTheField.length || 0] = {
+    id: id,
+    ref: killedPlayerRef,
+  };
   if (players[id]) delete players[id];
+}
+
+function cleanDeadBodiesFromTheField() {
+  Object.keys(deadBodiesOnTheField).forEach((key) => {
+    let killedId = deadBodiesOnTheField[key].id;
+    databasePathExchange(
+      deadBodiesOnTheField[key].ref,
+      killedId,
+      GAMESET_WATCHING
+    );
+    if (playerElements[killedId]) {
+      gameScene.removeChild(playerElements[killedId]);
+      delete playerElements[killedId];
+    }
+  });
+  deadBodiesOnTheField = {};
 }
 
 function unearth() {
@@ -238,8 +268,7 @@ function unearth() {
     Object.keys(holes).forEach((key) => {
       if (holes[key].hidden) {
         holes[key].hidden.forEach((playerId) => {
-          if (playerElements[playerId])
-            playerElements[playerId].classList.remove("hide");
+          if (playerElements[playerId]) show(playerId);
           // else => He gone to the base
         });
       }
@@ -255,4 +284,51 @@ function darkMode() {
 function lightMode() {
   bannerElement.classList.remove("arcade-seeker-banner");
   timerElement.classList.remove("arcade-seeker-banner");
+}
+
+function goBackInsideTheHoleIfDidntMoved(playerId) {
+  let player = players[playerId];
+  if (player) attemptHole(undefined, undefined, player.x, player.y, playerId);
+}
+
+function hide(id) {
+  playerElements[id].classList.add("hide");
+  if (id == playerId) {
+    appendElement(
+      id,
+      "arrow",
+      ["character-you-arrow", "grid-cell", "you", "character"],
+      tileSize + tileSize / 2
+    );
+  }
+}
+
+function show(id) {
+  playerElements[id].classList.remove("hide");
+  if (id == playerId) {
+    removeElement(`${id}-arrow`);
+  }
+}
+
+function removeElement(elementId) {
+  const detach = document.getElementById(elementId);
+  if (detach) detach.remove();
+}
+function appendElement(onId, element, classList, yDistance, attributes) {
+  const affix = document.createElement("div");
+  const transform = playerElements[onId].style.transform;
+  const x = transform.replace(/translate3d\(|px, -?(\d+)px, -?(\d+)px\)/g, "");
+  const y = transform.replace(/translate3d\(-?(\d+)px, |px, -?(\d+)px\)/g, "");
+  affix.style = `
+      transform: translate3d(${x}px, ${parseInt(y) + yDistance}px, 0px);
+      display: unset;
+    `;
+  affix.classList.add(...classList);
+  affix.setAttribute("id", `${onId}-${element}`);
+  if (isDefined(attributes)) {
+    Object.keys(attributes).forEach((key) => {
+      affix.setAttribute(key, attributes[key]);
+    });
+  }
+  playerElements[onId].parentElement.appendChild(affix);
 }

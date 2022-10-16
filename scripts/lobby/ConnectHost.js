@@ -19,9 +19,9 @@
       scheduleOfflinePlayerRemoval(allPlayersOnLobbyRef);
       cleanDatabaseReferencePath(GAMESET_WATCHING);
       cleanDatabaseReferencePath(GAMESET_GAMING);
+      setStatus(GAMESET_LOBBY, undefined);
       cleanDatabaseHolesRef();
       removeOlderHosts();
-      setStatusToWaitingRoom();
       refreshWaitingList();
       disableLoader();
 

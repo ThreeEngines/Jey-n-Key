@@ -26,7 +26,7 @@
   gamesetRef.on("value", (snapshot) => {
     const gameset = snapshot.val();
     if (gameset.status === GAMESET_LOADING) {
-      playerRef = databasePathExchange(playerRef, GAMESET_GAMING);
+      playerRef = databasePathExchange(playerRef, playerId, GAMESET_GAMING);
       location.href = `/views/gameset?playerId=${playerId}`;
     }
   });

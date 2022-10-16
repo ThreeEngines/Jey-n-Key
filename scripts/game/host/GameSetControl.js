@@ -1,47 +1,20 @@
 let round = 0;
-function setStatusToWaitingRoom() {
-  gamesetRef.set({
-    status: GAMESET_LOBBY,
-    seeker: "null",
-    timer: "",
-    rounds: round,
-  });
-}
 
-function setStatusToLoading() {
-  gamesetRef.set({
-    status: GAMESET_LOADING,
-    seeker: "null",
-    timer: "",
-    rounds: round,
-  });
-}
+function setStatus(gamesetStatus, seekerId) {
+  if (
+    ((gamesetStatus == GAMESET_LOBBY || gamesetStatus == GAMESET_LOADING) &&
+      !gamesetStatus.toUpperCase().includes("CONTROLS")) ||
+    seekerId === undefined
+  ) {
+    seekerId = "null";
+  } else {
+    round++;
+  }
 
-//nextSeekerId = player.id
-function setStatusToHide(nextSeekerId) {
   gamesetRef.set({
-    status: GAMESET_HIDE,
-    seeker: nextSeekerId,
-    timer: "",
-    rounds: round++,
-  });
-}
-
-//seekerId = player.id
-function setStatusToSeek(seekerId) {
-  gamesetRef.set({
-    status: GAMESET_SEEK,
+    status: gamesetStatus,
     seeker: seekerId,
     timer: "",
-    rounds: round++,
-  });
-}
-
-function setStatusToHunt(seekerId) {
-  gamesetRef.set({
-    status: GAMESET_HUNT,
-    seeker: seekerId,
-    timer: "",
-    rounds: round++,
+    rounds: round,
   });
 }

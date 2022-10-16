@@ -40,6 +40,7 @@ let allPlayersRef;
 let gamesetRef;
 let triggerRef;
 
+let deadBodiesOnTheField = {};
 let playerElements = {};
 let holeElements = {};
 let holes = {};
@@ -51,16 +52,25 @@ const bannerElement = document.getElementById("game-info");
 const playerNameInput = document.querySelector("#player-name");
 const playerColorButton = document.querySelector("#player-color");
 
-// GAMESET STATUS
-const GAMESET_LOADING = "LOADING";
+//GAMESET_ROOMS
 const GAMESET_WATCHING = "DEAD";
 const GAMESET_GAMING = "ALIVE";
 const GAMESET_LOBBY = "LOBBY";
 
+// GAMESET STATUS
+const GAMESET_LOADING = "LOADING";
+const GAMESET_PREPARING = "CONTROL_REMOVE_FROM_HOLES";
 const GAMESET_HIDE = "HIDE";
 const GAMESET_SEEK = "SEEK";
 const GAMESET_HUNT = "HUNT";
 
-const gamestates = [GAMESET_LOADING, GAMESET_HIDE, GAMESET_SEEK, GAMESET_HUNT];
+// MOVED TO GameSetScheduler.js
+// const gamestates = [
+//   GAMESET_LOADING,
+//   GAMESET_PREPARING,
+//   GAMESET_HIDE,
+//   GAMESET_SEEK,
+//   GAMESET_HUNT,
+// ];
 
 let host;

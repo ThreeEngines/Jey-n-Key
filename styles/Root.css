@@ -1,4 +1,5 @@
 :root {
+  --hawk: url(/images/hawk.png);
   --arrow: url(/images/arrow.png);
   --character: url(/images/characters_old.png);
   --map: url(/images/map.png);
@@ -124,23 +125,6 @@ button:active {
   height: var(--height);
   background: var(--map) no-repeat no-repeat;
   image-rendering: pixelated;
-}
-
-/* Coins */
-.hole-sprite {
-  background: var(--hole) no-repeat no-repeat;
-  /* animation: coinFloat 0.8s linear infinite alternate-reverse; */
-}
-@keyframes coinFloat {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(5px);
-  }
-}
-.hole-closed {
-  background: var(--hole-closed) no-repeat no-repeat;
 }
 
 /* <div id="loader" class="center"></div> */

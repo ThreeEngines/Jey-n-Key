@@ -4,7 +4,7 @@ const playerIdField = document.getElementById("player-id");
 const drillButton = document.getElementById("drill");
 
 lobbyButton.addEventListener("click", () => {
-  setStatusToWaitingRoom();
+  setStatus(GAMESET_LOBBY, undefined);
   const ip = window.localStorage.getItem("IP");
   location.href = `/views/lobby?IP=${ip}&playerId=${playerId}`;
 });

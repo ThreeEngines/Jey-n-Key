@@ -21,7 +21,7 @@ const timerElement = document.getElementById("timer");
           .ref(`players/${GAMESET_GAMING}/${playerId}`);
         // The player exists?
         playerRef.get().then((snapshot) => {
-          if (snapshot.exists()) {
+          if (isDefined(snapshot.val()?.id)) {
             pulse(playerRef);
             hostElement.classList.add("hide");
             host = false;
@@ -36,7 +36,7 @@ const timerElement = document.getElementById("timer");
             // Or is it the host?
             playerRef = firebase.database().ref(`players/${playerId}`);
             playerRef.get().then((snapshot) => {
-              if (snapshot.exists()) {
+              if (isDefined(snapshot.val()?.id)) {
                 pulse(playerRef);
                 dpadElement.classList.add("hide");
                 host = true;

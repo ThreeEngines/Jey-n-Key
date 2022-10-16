@@ -9,12 +9,12 @@ startGameButton.addEventListener("click", () => {
       text: "With few friends maybe not be that much fun.",
     }).then(function (isConfirm) {
       if (isConfirm) {
-        setStatusToLoading();
+        setStatus(GAMESET_LOADING, undefined);
         location.href = `/views/gameset?playerId=${playerId}`;
       }
     });
   } else {
-    setStatusToLoading();
+    setStatus(GAMESET_LOADING, undefined);
     location.href = `/views/gameset?playerId=${playerId}`;
   }
 });

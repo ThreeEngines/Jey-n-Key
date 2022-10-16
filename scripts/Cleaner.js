@@ -13,21 +13,22 @@ function scheduleOfflinePlayerRemoval(reference) {
 
 function secondChange(player, key) {
   if (player.online == false) {
-    const childRef = firebase.database().ref(`players/${GAMESET_LOBBY}/${key}`);
+    const childRef = firebase.database().ref(`players/${player.place}/${key}`);
     setTimeout(() => {
       childRef.get().then((snapshot) => {
         if (!snapshot.val()?.online) childRef.remove();
       });
     }, garbageCollectorTime * 1000);
-  } else if (!isDefined(player?.id)) {
-    const removedChild = document.getElementById("undefined");
-    if (isDefined(removedChild)) {
-      itemCount--;
-      removedChild.innerHTML = "";
-      removedChild.remove();
-      header.innerText = `Player name (${itemCount})`;
-    }
   }
+  // else if (!isDefined(player?.id)) {
+  //   const removedChild = document.getElementById("undefined");
+  //   if (isDefined(removedChild)) {
+  //     itemCount--;
+  //     removedChild.innerHTML = "";
+  //     removedChild.remove();
+  //     header.innerText = `Player name (${itemCount})`;
+  //   }
+  // }
 }
 
 function removeOlderHosts() {

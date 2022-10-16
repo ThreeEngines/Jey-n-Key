@@ -4,10 +4,12 @@ function enableGameSetListener() {
   gamesetRef.on("value", (snapshot) => {
     let gameset = snapshot.val();
     gamesetStatus = gameset.status;
+
+    console.log(`Currently on ${gamesetStatus}`);
     switch (gamesetStatus) {
       case GAMESET_LOBBY:
         if (players[playerId]) {
-          playerRef = databasePathExchange(playerRef, GAMESET_LOBBY);
+          playerRef = databasePathExchange(playerRef, playerId, GAMESET_LOBBY);
           swal({
             title: "CONGRATULATION!",
             icon: "success",
@@ -19,17 +21,22 @@ function enableGameSetListener() {
             location.href = `/views/waitingroom?playerId=${playerId}`;
           });
         } else {
-          playerRef = databasePathExchange(playerRef, GAMESET_LOBBY);
+          if (playerRef)
+            playerRef = databasePathExchange(
+              playerRef,
+              playerId,
+              GAMESET_LOBBY
+            );
           location.href = `/views/waitingroom?playerId=${playerId}`;
         }
         break;
+
       case GAMESET_LOADING:
         bannerElement.innerText = "The round is about to start!";
         enableControls();
-        unearth();
         break;
       case GAMESET_HIDE:
-        leaveHoles();
+        goBackInsideTheHoleIfDidntMoved(playerId);
         if (gameset.seeker == playerId) {
           bannerElement.innerText = "Seems that you're sleepy";
           sleep(players[playerId]);
@@ -40,7 +47,7 @@ function enableGameSetListener() {
         }
         break;
       case GAMESET_SEEK:
-        seekHide(gameset.seeker);
+        hideFromSeeker(gameset.seeker);
         bannerElement.innerText =
           "Stay steel. Do not call the atention of the Hawk!";
         if (gameset.seeker == playerId) {
@@ -53,9 +60,12 @@ function enableGameSetListener() {
         break;
       case GAMESET_HUNT:
         disableControls();
-        bannerElement.innerText = "HUNTING TIME!";
-        getUncoveredMoles(gameset.seeker);
+        bannerElement.innerText = "Take care! The Hawk is hunting!";
+        // getUncoveredMoles(gameset.seeker);
         kickOut(gameset.seeker);
+        break;
+      case GAMESET_PREPARING:
+        unearth();
         break;
       default:
     }
