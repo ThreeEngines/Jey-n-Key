@@ -1,7 +1,15 @@
 const generateButton = document.getElementById("QRCode-Generate");
+const input = document.getElementById("input_text");
 
 generateButton.addEventListener("click", () => {
   redirectToWaitingRoom();
+});
+
+input.addEventListener("keypress", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    generateButton.click();
+  }
 });
 
 function redirectToWaitingRoom() {

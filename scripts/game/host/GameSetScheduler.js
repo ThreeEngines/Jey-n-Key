@@ -67,7 +67,7 @@ function runtime() {
 
   // console.log(`Gameset going to => ${gamesetStatus}`);
   setStatus(gamesetStatus, seeker.id);
-  // if (!gamesetStatus.toUpperCase().includes("CONTROLS")) startTimer(); else runtime()
+  startTimer();
 }
 var interval;
 function startTimer() {
